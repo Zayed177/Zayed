@@ -1550,7 +1550,7 @@
         return `⚠️ Couldn't reach the AI server. Make sure the proxy is running: <code>node server.js</code>`;
       }
       if(/model.*not found|404/i.test(msg)){
-        return `⚠️ Model isn't available. Run: <code>ollama pull phi3:mini</code>`;
+        return `⚠️ Model isn't available. Run: <code>model: 'llama3-8b-8192'</code>`;
       }
       return `⚠️ Something went wrong: ${escapeHtml(msg)}`;
     }
