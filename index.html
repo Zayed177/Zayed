@@ -415,7 +415,7 @@
   .project-sig .fn{ color: var(--accent); }
   .project-sig .name{ color: var(--accent-3); }
   .project-sig .punct{ color: var(--muted); }
-  .project-links{ display: flex; gap: 14px; font-family: 'JetBrains Mono', monospace; font-size: 12.5px; flex-wrap: wrap; }
+  .project-links{ display: flex; gap: 14px; font-family: 'JetBrains Mono', monospace; font-size: 12.5px; }
   .project-links a{ color: var(--muted); border-bottom: 1px solid transparent; transition: color .2s ease, border-color .2s ease; }
   .project-links a:hover{ color: var(--accent-2); border-color: var(--accent-2); }
   .project-desc{
@@ -1013,7 +1013,6 @@
           <div class="hero-cta">
             <a href="#work" class="btn btn-primary">View work →</a>
             <a href="#contact" class="btn btn-ghost">Say hello</a>
-            <a href="https://www.mediafire.com/file/ko1mxzj0ozfr4vy/app-debug.apk/file" target="_blank" rel="noopener" class="btn btn-primary" style="background: #6c5ce7; border-color: #6c5ce7;">📱 Download APK (Android)</a>
           </div>
         </div>
       </div>
@@ -1144,10 +1143,7 @@
         <div class="project-body-pad">
           <div class="project-head">
             <div class="project-sig"><span class="fn">function</span> <span class="name">EclipseBlitz</span><span class="punct">()</span></div>
-            <div class="project-links">
-              <a href="eclipse-blitz.html" target="_blank" rel="noopener">Play ↗</a>
-              <a href="https://www.mediafire.com/file/ko1mxzj0ozfr4vy/app-debug.apk/file" target="_blank" rel="noopener">📱 APK</a>
-            </div>
+            <div class="project-links"><a href="eclipse-blitz.html" target="_blank" rel="noopener">Play ↗</a></div>
           </div>
           <p class="project-desc">A fast, neon-drenched arcade space shooter built from scratch — dodge, blitz through waves of enemies, and chase the high score. Runs entirely in the browser with a full HUD, on-screen controls, and online co-op mode.</p>
           <div class="project-tags"><span>Canvas API</span><span>JavaScript</span><span>Game Design</span><span>Multiplayer</span></div>
@@ -1421,12 +1417,12 @@
 
   
   // ============================================================
-  //  🧠 CHATBOT LOGIC (connects to your Render API)
-  //  ✅ FIXED: API endpoint updated to your Render URL
+  //  🧠 CHATBOT LOGIC (connects to localhost:3000)
+  //  ✅ FIXED: Intelligent, direct, actually useful
   // ============================================================
 
   (function(){
-    const API_BASE = 'https://my-chatbot-api-h93b.onrender.com'; // <-- NEW URL
+    const API_BASE = 'http://localhost:3000';
     const fab = document.getElementById('chatFab');
     const overlay = document.getElementById('chatOverlay');
     const closeBtn = document.getElementById('chatClose');
@@ -1551,15 +1547,15 @@
     function friendlyError(err){
       const msg = (err && err.message) || String(err);
       if(/Failed to fetch|NetworkError/i.test(msg)){
-        return `⚠️ Couldn't reach the AI server. Make sure your Render service is running.`;
+        return `⚠️ Couldn't reach the AI server. Make sure the proxy is running: <code>node server.js</code>`;
       }
       if(/model.*not found|404/i.test(msg)){
-        return `⚠️ Model isn't available on the server.`;
+        return `⚠️ Model isn't available. Run: <code>ollama pull phi3:mini</code>`;
       }
       return `⚠️ Something went wrong: ${escapeHtml(msg)}`;
     }
 
-    // ----- Send message (INTELLIGENT SYSTEM PROMPT) -----
+    // ----- Send message (FIXED: INTELLIGENT SYSTEM PROMPT) -----
     async function sendMessage(){
       const text = inputEl.value.trim();
       if(!text || isBusy) return;
@@ -1574,30 +1570,30 @@
       const typing = renderTyping();
 
       try {
-        const payload = {
-          model: 'phi3:mini',
-          messages: [
-            { 
-              role: 'system', 
-              content: `You are a smart, helpful AI assistant integrated into Zayed's portfolio website.
-              
-              RULES:
-              1. Be DIRECT and USEFUL — if someone asks a question, give a real answer.
-              2. If you don't know something, say "I don't know, but here's how you might find out…" and offer a practical suggestion.
-              3. DO NOT make up jokes, trivia, or deflect questions — that's unhelpful.
-              4. If someone asks for contact info, tell them to check the "Contact" section of the website or email kari24uvi@gmail.com.
-              5. Keep responses concise (2-4 sentences) unless the user asks for more detail.
-              6. Be professional but approachable — like a helpful coworker.
-              
-              You represent Zayed, so be honest and straightforward.` 
-            },
-            ...history.slice(-20)
-          ],
-          stream: true,
-          temperature: 0.7,
-          max_tokens: 800
-        };
-
+        // ✅ INTELLIGENT SYSTEM PROMPT — direct, helpful, no nonsense
+       const payload = {
+  model: 'llama3-8b-8192',  // ← change this line
+  messages: [
+    { 
+      role: 'system', 
+      content: `You are a smart, helpful AI assistant integrated into Zayed's portfolio website.
+      
+      RULES:
+      1. Be DIRECT and USEFUL — if someone asks a question, give a real answer.
+      2. If you don't know something, say "I don't know, but here's how you might find out…" and offer a practical suggestion.
+      3. DO NOT make up jokes, trivia, or deflect questions — that's unhelpful.
+      4. If someone asks for contact info, tell them to check the "Contact" section of the website or email kari24uvi@gmail.com.
+      5. Keep responses concise (2-4 sentences) unless the user asks for more detail.
+      6. Be professional but approachable — like a helpful coworker.
+      
+      You represent Zayed, so be honest and straightforward.` 
+    },
+    ...history.slice(-20)
+  ],
+  stream: true,
+  temperature: 0.7,
+  max_tokens: 800
+};
         const res = await fetch(`${API_BASE}/api/chat/stream`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
