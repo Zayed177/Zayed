@@ -1,0 +1,1016 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>💰 Money Tracker (DZD)</title>
+    <style>
+        /* ── Reset & Base ─────────────────────────────────────────────── */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            min-height: 100vh;
+            background: #0d0b1a;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 1.5rem;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* ── Animated gradient background ────────────────────────────── */
+        .bg-gradient {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            background: linear-gradient(135deg, #0d0b1a 0%, #1a1a3a 40%, #2a1f4a 70%, #0d0b1a 100%);
+            background-size: 400% 400%;
+            animation: gradientShift 20s ease-in-out infinite;
+        }
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* ── Floating orbs ────────────────────────────────────────────── */
+        .orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.3;
+            pointer-events: none;
+            z-index: 0;
+            animation: orbFloat 25s infinite alternate ease-in-out;
+        }
+        .orb:nth-child(1) {
+            width: 300px;
+            height: 300px;
+            background: #ff6b6b;
+            top: -100px;
+            left: -100px;
+        }
+        .orb:nth-child(2) {
+            width: 400px;
+            height: 400px;
+            background: #4ecdc4;
+            bottom: -150px;
+            right: -150px;
+            animation-duration: 30s;
+            animation-delay: -5s;
+        }
+        .orb:nth-child(3) {
+            width: 200px;
+            height: 200px;
+            background: #ffe66d;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation-duration: 20s;
+            animation-delay: -10s;
+            opacity: 0.15;
+        }
+        @keyframes orbFloat {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(40px, -30px) scale(1.2); }
+        }
+
+        /* ── Main card ────────────────────────────────────────────────── */
+        .app {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            max-width: 740px;
+            background: rgba(255, 255, 255, 0.04);
+            backdrop-filter: blur(32px) saturate(1.4);
+            -webkit-backdrop-filter: blur(32px) saturate(1.4);
+            border-radius: 3rem;
+            padding: 2rem 2.2rem 2.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 40px 100px rgba(0, 0, 0, 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.4s ease;
+            animation: cardEntry 0.7s ease forwards;
+            opacity: 0;
+            transform: scale(0.96) translateY(20px);
+        }
+        @keyframes cardEntry {
+            to { opacity: 1; transform: scale(1) translateY(0); }
+        }
+        .app:hover {
+            transform: translateY(-4px) scale(1.005);
+            box-shadow: 0 50px 120px rgba(0, 0, 0, 0.8);
+        }
+
+        /* ── Header ───────────────────────────────────────────────────── */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.6rem;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+        .header h1 {
+            font-size: 1.7rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #f9d976, #f5e77b, #f9d976);
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: shimmer 4s ease-in-out infinite;
+            letter-spacing: -0.5px;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+        @keyframes shimmer {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+        .header h1 span {
+            font-size: 1.8rem;
+            -webkit-text-fill-color: initial;
+        }
+        .reset-btn {
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            color: rgba(255, 255, 255, 0.5);
+            padding: 0.4rem 1rem;
+            border-radius: 2rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(4px);
+            letter-spacing: 0.5px;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+        .reset-btn:hover {
+            background: rgba(255, 70, 70, 0.15);
+            border-color: rgba(255, 70, 70, 0.3);
+            color: #ff6b6b;
+            transform: scale(1.05) rotate(-2deg);
+        }
+
+        /* ── Balance display ──────────────────────────────────────────── */
+        .balance-section {
+            text-align: center;
+            padding: 1.8rem 0 1.2rem;
+            position: relative;
+        }
+        .balance-label {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 5px;
+            color: rgba(255, 255, 255, 0.25);
+            font-weight: 500;
+            margin-bottom: 0.2rem;
+        }
+        .balance-amount {
+            font-size: 4.6rem;
+            font-weight: 800;
+            color: #fff;
+            text-shadow: 0 8px 40px rgba(0, 0, 0, 0.4);
+            transition: color 0.6s ease, transform 0.3s ease;
+            line-height: 1.2;
+            font-variant-numeric: tabular-nums;
+            letter-spacing: -2px;
+            position: relative;
+            display: inline-block;
+        }
+        .balance-amount .currency {
+            font-size: 2.2rem;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.3);
+            margin-right: 6px;
+            letter-spacing: 0;
+        }
+        .balance-amount.positive {
+            color: #6fcf97;
+        }
+        .balance-amount.negative {
+            color: #f28b82;
+        }
+        .balance-amount.zero {
+            color: rgba(255, 255, 255, 0.4);
+        }
+
+        /* animated ring */
+        .balance-ring {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 260px;
+            height: 260px;
+            border-radius: 50%;
+            border: 1px solid rgba(255, 255, 255, 0.03);
+            pointer-events: none;
+            animation: ringSpin 20s linear infinite;
+            box-shadow: 0 0 60px rgba(255, 215, 0, 0.02);
+        }
+        .balance-ring::after {
+            content: '';
+            position: absolute;
+            inset: 10px;
+            border-radius: 50%;
+            border: 1px dashed rgba(255, 215, 0, 0.04);
+            animation: ringSpinReverse 25s linear infinite;
+        }
+        @keyframes ringSpin {
+            0% { transform: translate(-50%, -50%) rotate(0deg); }
+            100% { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+        @keyframes ringSpinReverse {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(-360deg); }
+        }
+
+        /* ── Stats row ────────────────────────────────────────────────── */
+        .stats-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 0.8rem;
+            margin: 1rem 0 1.8rem;
+        }
+        .stat-card {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 1.5rem;
+            padding: 0.8rem 0.4rem;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            transition: all 0.3s ease;
+            backdrop-filter: blur(4px);
+            position: relative;
+            overflow: hidden;
+        }
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at 50% 0%, rgba(255,255,255,0.02), transparent 70%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+        .stat-card:hover::before {
+            opacity: 1;
+        }
+        .stat-card:hover {
+            background: rgba(255, 255, 255, 0.06);
+            transform: translateY(-3px);
+            border-color: rgba(255, 255, 255, 0.08);
+        }
+        .stat-card .stat-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #fff;
+            font-variant-numeric: tabular-nums;
+            transition: color 0.3s ease;
+        }
+        .stat-card .stat-label {
+            font-size: 0.6rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: rgba(255, 255, 255, 0.25);
+            margin-top: 0.1rem;
+        }
+        .stat-card.income .stat-value {
+            color: #6fcf97;
+        }
+        .stat-card.expense .stat-value {
+            color: #f28b82;
+        }
+        .stat-card.count .stat-value {
+            color: #bb86fc;
+        }
+
+        /* ── Form ──────────────────────────────────────────────────────── */
+        .form-section {
+            margin: 1.2rem 0 1.8rem;
+        }
+        .form-row {
+            display: flex;
+            gap: 0.6rem;
+            flex-wrap: wrap;
+        }
+        .form-row input,
+        .form-row select,
+        .form-row button {
+            padding: 0.75rem 1rem;
+            border: none;
+            border-radius: 1.4rem;
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: all 0.25s ease;
+            outline: none;
+            background: rgba(255, 255, 255, 0.05);
+            color: #fff;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            backdrop-filter: blur(4px);
+        }
+        .form-row input::placeholder {
+            color: rgba(255, 255, 255, 0.2);
+            font-weight: 400;
+        }
+        .form-row input:focus,
+        .form-row select:focus {
+            border-color: rgba(255, 215, 0, 0.2);
+            background: rgba(255, 255, 255, 0.07);
+            box-shadow: 0 0 0 5px rgba(255, 215, 0, 0.03);
+        }
+        .form-row input[type="text"] {
+            flex: 2;
+            min-width: 130px;
+        }
+        .form-row input[type="number"] {
+            flex: 1;
+            min-width: 100px;
+        }
+        .form-row select {
+            flex: 0.8;
+            min-width: 100px;
+            appearance: none;
+            cursor: pointer;
+            color: rgba(255, 255, 255, 0.7);
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='white' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 1rem center;
+            padding-right: 2.5rem;
+        }
+        .form-row select option {
+            background: #1a1a2e;
+            color: #fff;
+        }
+        .form-row button {
+            flex: 0.7;
+            min-width: 90px;
+            background: linear-gradient(135deg, #f9d976, #f5e77b);
+            color: #0d0b1a;
+            font-weight: 700;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 6px 28px rgba(249, 217, 118, 0.15);
+            transition: all 0.3s ease;
+            letter-spacing: 0.5px;
+            position: relative;
+            overflow: hidden;
+        }
+        .form-row button::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(255,255,255,0.2), transparent);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .form-row button:hover::after {
+            opacity: 1;
+        }
+        .form-row button:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 12px 40px rgba(249, 217, 118, 0.25);
+        }
+        .form-row button:active {
+            transform: scale(0.96);
+        }
+
+        /* ── Entries list ─────────────────────────────────────────────── */
+        .entries-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 1.6rem 0 0.8rem;
+            padding-bottom: 0.3rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+        }
+        .entries-header h2 {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.2);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        .entries-header .entry-count {
+            font-size: 0.7rem;
+            color: rgba(255, 255, 255, 0.15);
+            background: rgba(255, 255, 255, 0.04);
+            padding: 0.2rem 0.8rem;
+            border-radius: 2rem;
+        }
+
+        .entries-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            max-height: 380px;
+            overflow-y: auto;
+            padding-right: 4px;
+            scroll-behavior: smooth;
+        }
+        .entries-list::-webkit-scrollbar {
+            width: 4px;
+        }
+        .entries-list::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 4px;
+        }
+        .entries-list::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 4px;
+        }
+
+        /* ── Entry item ────────────────────────────────────────────────── */
+        .entry-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.7rem 1rem;
+            border-radius: 1.4rem;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.03);
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            animation: slideIn 0.4s ease forwards;
+            opacity: 0;
+            transform: translateX(-20px) scale(0.96);
+        }
+        .entry-item:hover {
+            background: rgba(255, 255, 255, 0.06);
+            border-color: rgba(255, 255, 255, 0.08);
+            transform: translateX(6px) scale(1.01);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+        }
+        .entry-item .entry-info {
+            display: flex;
+            flex-direction: column;
+            gap: 0.1rem;
+            flex: 1;
+        }
+        .entry-item .entry-desc {
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: rgba(255, 255, 255, 0.85);
+        }
+        .entry-item .entry-meta {
+            font-size: 0.6rem;
+            color: rgba(255, 255, 255, 0.15);
+            letter-spacing: 0.3px;
+        }
+        .entry-item .entry-amount {
+            font-size: 1.1rem;
+            font-weight: 700;
+            font-variant-numeric: tabular-nums;
+            margin-right: 0.8rem;
+            transition: color 0.3s ease;
+        }
+        .entry-item .entry-amount.income {
+            color: #6fcf97;
+        }
+        .entry-item .entry-amount.expense {
+            color: #f28b82;
+        }
+        .entry-item .delete-btn {
+            background: rgba(255, 255, 255, 0.03);
+            border: none;
+            color: rgba(255, 255, 255, 0.15);
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        .entry-item .delete-btn:hover {
+            background: rgba(255, 70, 70, 0.15);
+            color: #ff6b6b;
+            transform: rotate(90deg) scale(1.15);
+        }
+
+        @keyframes slideIn {
+            0% { opacity: 0; transform: translateX(-20px) scale(0.96); }
+            100% { opacity: 1; transform: translateX(0) scale(1); }
+        }
+
+        /* ── Empty state ──────────────────────────────────────────────── */
+        .empty-state {
+            text-align: center;
+            padding: 3rem 1rem;
+            color: rgba(255, 255, 255, 0.08);
+            font-size: 0.9rem;
+            letter-spacing: 0.5px;
+        }
+        .empty-state .empty-icon {
+            font-size: 3rem;
+            margin-bottom: 0.6rem;
+            opacity: 0.3;
+            animation: floatIcon 3s ease-in-out infinite;
+        }
+        @keyframes floatIcon {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+
+        /* ── Confetti canvas ──────────────────────────────────────────── */
+        #confetti-canvas {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 999;
+            width: 100%;
+            height: 100%;
+        }
+
+        /* ── Responsive ───────────────────────────────────────────────── */
+        @media (max-width: 600px) {
+            .app {
+                padding: 1.2rem 1.2rem 1.8rem;
+                border-radius: 2rem;
+            }
+            .balance-amount {
+                font-size: 2.8rem;
+            }
+            .balance-amount .currency {
+                font-size: 1.6rem;
+            }
+            .balance-ring {
+                width: 180px;
+                height: 180px;
+            }
+            .stats-row {
+                grid-template-columns: 1fr 1fr 1fr;
+                gap: 0.4rem;
+            }
+            .stat-card .stat-value {
+                font-size: 1.1rem;
+            }
+            .form-row {
+                gap: 0.4rem;
+            }
+            .form-row input,
+            .form-row select,
+            .form-row button {
+                font-size: 0.85rem;
+                padding: 0.6rem 0.8rem;
+            }
+            .form-row input[type="text"] {
+                flex: 1 1 100%;
+            }
+            .form-row input[type="number"] {
+                flex: 1;
+                min-width: 70px;
+            }
+            .form-row select {
+                flex: 1;
+                min-width: 70px;
+            }
+            .form-row button {
+                flex: 1;
+                min-width: 60px;
+            }
+            .header h1 {
+                font-size: 1.2rem;
+            }
+            .entry-item {
+                padding: 0.5rem 0.7rem;
+                border-radius: 1rem;
+            }
+            .entry-item .entry-desc {
+                font-size: 0.85rem;
+            }
+            .entry-item .entry-amount {
+                font-size: 0.95rem;
+            }
+        }
+
+        @media (max-width: 420px) {
+            .stats-row {
+                grid-template-columns: 1fr 1fr 1fr;
+                gap: 0.2rem;
+            }
+            .stat-card {
+                padding: 0.4rem 0.1rem;
+            }
+            .stat-card .stat-value {
+                font-size: 0.9rem;
+            }
+            .stat-card .stat-label {
+                font-size: 0.5rem;
+            }
+            .balance-amount {
+                font-size: 2.2rem;
+            }
+            .balance-ring {
+                width: 140px;
+                height: 140px;
+            }
+        }
+
+        /* ── Shake animation ──────────────────────────────────────────── */
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            20% { transform: translateX(-8px); }
+            40% { transform: translateX(8px); }
+            60% { transform: translateX(-5px); }
+            80% { transform: translateX(5px); }
+        }
+        .shake {
+            animation: shake 0.4s ease;
+        }
+
+        /* ── Sparkle on add ───────────────────────────────────────────── */
+        @keyframes sparklePop {
+            0% { transform: scale(0.6); opacity: 0; }
+            50% { transform: scale(1.3); opacity: 1; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        .sparkle-pop {
+            animation: sparklePop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ─── Background effects ──────────────────────────────────────── -->
+    <div class="bg-gradient"></div>
+    <div class="orb"></div>
+    <div class="orb"></div>
+    <div class="orb"></div>
+
+    <!-- ─── Confetti Canvas ──────────────────────────────────────────── -->
+    <canvas id="confetti-canvas"></canvas>
+
+    <!-- ─── Main App ──────────────────────────────────────────────────── -->
+    <div class="app" id="app">
+
+        <!-- Header -->
+        <div class="header">
+            <h1>
+                <span>💰</span> Money Tracker
+            </h1>
+            <button class="reset-btn" id="resetBtn">✕ Reset</button>
+        </div>
+
+        <!-- Balance -->
+        <div class="balance-section">
+            <div class="balance-ring"></div>
+            <div class="balance-label">Current Balance</div>
+            <div class="balance-amount zero" id="balanceDisplay">
+                <span class="currency">DA</span><span id="balanceNumber">0.00</span>
+            </div>
+        </div>
+
+        <!-- Stats -->
+        <div class="stats-row">
+            <div class="stat-card income">
+                <div class="stat-value" id="totalIncome">DA 0.00</div>
+                <div class="stat-label">⬆ Saved</div>
+            </div>
+            <div class="stat-card expense">
+                <div class="stat-value" id="totalExpense">DA 0.00</div>
+                <div class="stat-label">⬇ Spent</div>
+            </div>
+            <div class="stat-card count">
+                <div class="stat-value" id="entryCount">0</div>
+                <div class="stat-label">Entries</div>
+            </div>
+        </div>
+
+        <!-- Form -->
+        <div class="form-section">
+            <div class="form-row" id="entryForm">
+                <input type="text" id="descInput" placeholder="What? (e.g. Groceries)" autocomplete="off" />
+                <input type="number" id="amountInput" placeholder="0.00" step="0.01" min="0.01" />
+                <select id="typeSelect">
+                    <option value="income">💚 Saved</option>
+                    <option value="expense">❤️ Spent</option>
+                </select>
+                <button id="addBtn">+ Add</button>
+            </div>
+        </div>
+
+        <!-- Entries list -->
+        <div class="entries-header">
+            <h2>📋 History</h2>
+            <span class="entry-count" id="entryCountLabel">0 entries</span>
+        </div>
+        <div class="entries-list" id="entriesList">
+            <div class="empty-state" id="emptyState">
+                <div class="empty-icon">📭</div>
+                <div class="empty-text">No entries yet — start tracking!</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ─── State ──────────────────────────────────────────────────────
+        let entries = [];
+        let balance = 0;
+        let totalIncome = 0;
+        let totalExpense = 0;
+
+        // DOM refs
+        const balanceDisplay = document.getElementById('balanceDisplay');
+        const balanceNumber = document.getElementById('balanceNumber');
+        const totalIncomeEl = document.getElementById('totalIncome');
+        const totalExpenseEl = document.getElementById('totalExpense');
+        const entryCountEl = document.getElementById('entryCount');
+        const entryCountLabel = document.getElementById('entryCountLabel');
+        const entriesList = document.getElementById('entriesList');
+        const emptyState = document.getElementById('emptyState');
+        const descInput = document.getElementById('descInput');
+        const amountInput = document.getElementById('amountInput');
+        const typeSelect = document.getElementById('typeSelect');
+        const addBtn = document.getElementById('addBtn');
+        const resetBtn = document.getElementById('resetBtn');
+
+        // ─── Confetti ────────────────────────────────────────────────────
+        const canvas = document.getElementById('confetti-canvas');
+        const ctx = canvas.getContext('2d');
+        let confettiPieces = [];
+        let confettiActive = false;
+        let confettiFrame = null;
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        class ConfettiPiece {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height - canvas.height;
+                this.w = Math.random() * 10 + 4;
+                this.h = Math.random() * 6 + 3;
+                this.color = `hsl(${Math.random() * 360}, 80%, 65%)`;
+                this.vy = Math.random() * 3 + 2;
+                this.vx = (Math.random() - 0.5) * 2;
+                this.rotation = Math.random() * 360;
+                this.rotSpeed = (Math.random() - 0.5) * 6;
+                this.opacity = 1;
+            }
+            update() {
+                this.y += this.vy;
+                this.x += this.vx + Math.sin(this.y * 0.01) * 0.3;
+                this.rotation += this.rotSpeed;
+                if (this.y > canvas.height + 20) this.opacity = 0;
+                this.vy += 0.02;
+            }
+            draw() {
+                ctx.save();
+                ctx.translate(this.x, this.y);
+                ctx.rotate((this.rotation * Math.PI) / 180);
+                ctx.globalAlpha = this.opacity * 0.85;
+                ctx.fillStyle = this.color;
+                ctx.shadowColor = this.color;
+                ctx.shadowBlur = 8;
+                ctx.fillRect(-this.w / 2, -this.h / 2, this.w, this.h);
+                ctx.restore();
+            }
+        }
+
+        function fireConfetti(count = 120) {
+            if (confettiActive) {
+                confettiPieces = [];
+                if (confettiFrame) cancelAnimationFrame(confettiFrame);
+            }
+            confettiActive = true;
+            for (let i = 0; i < count; i++) {
+                confettiPieces.push(new ConfettiPiece());
+            }
+            let startTime = Date.now();
+
+            function animate() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                let alive = false;
+                for (const p of confettiPieces) {
+                    p.update();
+                    if (p.opacity > 0.1) alive = true;
+                    p.draw();
+                }
+                if (alive && Date.now() - startTime < 5000) {
+                    confettiFrame = requestAnimationFrame(animate);
+                } else {
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                    confettiActive = false;
+                    confettiPieces = [];
+                }
+            }
+            animate();
+        }
+
+        // ─── Persistence ────────────────────────────────────────────────
+        function save() {
+            localStorage.setItem('moneyTrackerEntries', JSON.stringify(entries));
+        }
+
+        function load() {
+            const data = localStorage.getItem('moneyTrackerEntries');
+            if (data) {
+                try {
+                    entries = JSON.parse(data);
+                    return true;
+                } catch (_) { /* ignore */ }
+            }
+            return false;
+        }
+
+        // ─── Update UI ──────────────────────────────────────────────────
+        function updateUI(animateBalance = false) {
+            // Calculate totals
+            totalIncome = entries
+                .filter(e => e.type === 'income')
+                .reduce((sum, e) => sum + e.amount, 0);
+            totalExpense = entries
+                .filter(e => e.type === 'expense')
+                .reduce((sum, e) => sum + e.amount, 0);
+            balance = totalIncome - totalExpense;
+
+            // Balance
+            const prevBalance = parseFloat(balanceNumber.textContent.replace(/,/g, ''));
+            balanceNumber.textContent = balance.toFixed(2);
+
+            // Color
+            balanceDisplay.classList.remove('positive', 'negative', 'zero');
+            if (balance > 0) balanceDisplay.classList.add('positive');
+            else if (balance < 0) balanceDisplay.classList.add('negative');
+            else balanceDisplay.classList.add('zero');
+
+            // Stats (with DA prefix)
+            totalIncomeEl.textContent = 'DA ' + totalIncome.toFixed(2);
+            totalExpenseEl.textContent = 'DA ' + totalExpense.toFixed(2);
+            const count = entries.length;
+            entryCountEl.textContent = count;
+            entryCountLabel.textContent = count + ' entry' + (count !== 1 ? 's' : '');
+
+            // List
+            renderEntries();
+
+            // Save
+            save();
+
+            // Confetti on positive balance increase
+            if (animateBalance && balance > prevBalance && balance > 0) {
+                const diff = balance - prevBalance;
+                if (diff > 0.5) {
+                    const intensity = Math.min(Math.floor(diff / 10) + 30, 150);
+                    fireConfetti(intensity);
+                }
+            }
+        }
+
+        function renderEntries() {
+            entriesList.innerHTML = '';
+            if (entries.length === 0) {
+                entriesList.appendChild(emptyState);
+                return;
+            }
+
+            const sorted = [...entries].sort((a, b) => b.id - a.id);
+
+            for (const entry of sorted) {
+                const div = document.createElement('div');
+                div.className = 'entry-item';
+                div.style.animationDelay = '0.05s';
+
+                const isIncome = entry.type === 'income';
+                const sign = isIncome ? '+' : '-';
+                const cls = isIncome ? 'income' : 'expense';
+                const label = isIncome ? 'Saved' : 'Spent';
+
+                div.innerHTML = `
+                    <div class="entry-info">
+                        <div class="entry-desc">${escapeHtml(entry.description)}</div>
+                        <div class="entry-meta">${label} · ${new Date(entry.date).toLocaleDateString()}</div>
+                    </div>
+                    <div class="entry-amount ${cls}">${sign}DA ${entry.amount.toFixed(2)}</div>
+                    <button class="delete-btn" data-id="${entry.id}" title="Delete">✕</button>
+                `;
+
+                entriesList.appendChild(div);
+
+                const delBtn = div.querySelector('.delete-btn');
+                delBtn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    const id = parseInt(this.dataset.id);
+                    entries = entries.filter(e => e.id !== id);
+                    updateUI(true);
+                });
+            }
+        }
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        // ─── Add entry ──────────────────────────────────────────────────
+        function addEntry() {
+            const desc = descInput.value.trim();
+            const amount = parseFloat(amountInput.value);
+            const type = typeSelect.value;
+
+            if (!desc) {
+                descInput.classList.add('shake');
+                setTimeout(() => descInput.classList.remove('shake'), 400);
+                descInput.focus();
+                return;
+            }
+            if (!amount || amount <= 0) {
+                amountInput.classList.add('shake');
+                setTimeout(() => amountInput.classList.remove('shake'), 400);
+                amountInput.focus();
+                return;
+            }
+
+            const entry = {
+                id: Date.now() + Math.random() * 1000,
+                description: desc,
+                amount: amount,
+                type: type,
+                date: new Date().toISOString()
+            };
+
+            entries.push(entry);
+            descInput.value = '';
+            amountInput.value = '';
+            descInput.focus();
+
+            addBtn.classList.add('sparkle-pop');
+            setTimeout(() => addBtn.classList.remove('sparkle-pop'), 500);
+
+            updateUI(true);
+        }
+
+        // ─── Reset ──────────────────────────────────────────────────────
+        function resetAll() {
+            if (entries.length === 0) return;
+            if (confirm('Delete all entries?')) {
+                entries = [];
+                updateUI(false);
+                resetBtn.style.transform = 'scale(0.9)';
+                setTimeout(() => resetBtn.style.transform = '', 300);
+            }
+        }
+
+        // ─── Keyboard shortcuts ────────────────────────────────────────
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' && document.activeElement === descInput) {
+                e.preventDefault();
+                amountInput.focus();
+            } else if (e.key === 'Enter' && document.activeElement === amountInput) {
+                e.preventDefault();
+                addEntry();
+            }
+        });
+
+        // ─── Event listeners ────────────────────────────────────────────
+        addBtn.addEventListener('click', addEntry);
+        resetBtn.addEventListener('click', resetAll);
+
+        typeSelect.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                addEntry();
+            }
+        });
+
+        // ─── Init ───────────────────────────────────────────────────────
+        const loaded = load();
+        if (!loaded) {
+            entries = [{
+                id: Date.now() - 100000,
+                description: 'Welcome bonus',
+                amount: 1000,
+                type: 'income',
+                date: new Date(Date.now() - 86400000).toISOString()
+            }, {
+                id: Date.now() - 200000,
+                description: 'Coffee & snacks',
+                amount: 250,
+                type: 'expense',
+                date: new Date(Date.now() - 172800000).toISOString()
+            }];
+        }
+        updateUI(false);
+
+        setTimeout(() => descInput.focus(), 400);
+
+        console.log('💰 Money Tracker (DZD) loaded — track your savings!');
+    </script>
+</body>
+</html>

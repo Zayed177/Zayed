@@ -1,0 +1,1259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zayed — Software Developer</title>
+<meta name="description" content="Zayed — software developer building fast, thoughtful products for the web.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --ink: #0a0d12;
+    --surface: #10141c;
+    --surface-2: #161b25;
+    --paper: #edeae2;
+    --muted: #8a93a6;
+    --comment: #5b6472;
+    --accent: #f2a93b;   /* amber — keywords */
+    --accent-2: #6ee7c8; /* mint — strings / links */
+    --accent-3: #8fb8f6; /* soft blue — function names */
+    --line: rgba(237,234,226,0.09);
+    --line-strong: rgba(237,234,226,0.16);
+    --radius: 10px;
+    --maxw: 860px;
+    --gutter-w: 64px;
+  }
+
+  *{ box-sizing: border-box; }
+  html{ scroll-behavior: smooth; }
+
+  @media (prefers-reduced-motion: reduce){
+    html{ scroll-behavior: auto; }
+    *{ animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; }
+  }
+
+  body{
+    margin:0;
+    background: var(--ink);
+    color: var(--paper);
+    font-family: 'Inter', sans-serif;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    position: relative;
+  }
+
+  ::selection{ background: var(--accent); color: var(--ink); }
+
+  a{ color: inherit; text-decoration: none; }
+
+  .mono{ font-family: 'JetBrains Mono', monospace; }
+
+  /* ---------- background grid ---------- */
+  .bg-grid{
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background-image:
+      linear-gradient(var(--line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--line) 1px, transparent 1px);
+    background-size: 48px 48px;
+    -webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, #000 30%, transparent 75%);
+            mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, #000 30%, transparent 75%);
+    opacity: 0.5;
+  }
+
+  .bg-orb{
+    position: fixed;
+    border-radius: 50%;
+    filter: blur(90px);
+    opacity: 0.16;
+    pointer-events: none;
+    z-index: 0;
+    will-change: transform;
+  }
+  .bg-orb.o1{ width: 420px; height: 420px; background: var(--accent); top: -120px; left: -100px; animation: orbFloatA 22s ease-in-out infinite alternate; }
+  .bg-orb.o2{ width: 380px; height: 380px; background: var(--accent-2); top: 28%; right: -150px; animation: orbFloatB 26s ease-in-out infinite alternate; }
+  .bg-orb.o3{ width: 340px; height: 340px; background: var(--accent-3); bottom: -150px; left: 18%; animation: orbFloatC 30s ease-in-out infinite alternate; }
+  @keyframes orbFloatA{ 0%{ transform: translate(0,0); } 100%{ transform: translate(70px,50px); } }
+  @keyframes orbFloatB{ 0%{ transform: translate(0,0); } 100%{ transform: translate(-60px,70px); } }
+  @keyframes orbFloatC{ 0%{ transform: translate(0,0); } 100%{ transform: translate(50px,-60px); } }
+  @media (prefers-reduced-motion: reduce){ .bg-orb{ animation: none !important; } }
+
+  /* ---------- line-number gutter ---------- */
+  .gutter{
+    position: fixed;
+    top: 0; left: 0; bottom: 0;
+    width: var(--gutter-w);
+    border-right: 1px solid var(--line);
+    z-index: 1;
+    display: none;
+  }
+  @media (min-width: 1100px){ .gutter{ display: block; } }
+  .gutter-inner{
+    position: absolute; top: 0; left: 0; right: 0;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--comment);
+    text-align: right;
+    padding-right: 14px;
+    line-height: 28px;
+    user-select: none;
+  }
+
+  .content-shell{
+    position: relative;
+    z-index: 2;
+    margin-left: 0;
+  }
+  @media (min-width: 1100px){
+    .content-shell{ margin-left: var(--gutter-w); }
+  }
+
+  /* ---------- top bar ---------- */
+  .topbar{
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    background: rgba(10,13,18,0.82);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--line);
+  }
+  .topbar-inner{
+    max-width: var(--maxw);
+    margin: 0 auto;
+    padding: 16px 28px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+  }
+  .tab{
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    color: var(--muted);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    white-space: nowrap;
+  }
+  .tab::before{
+    content: '●';
+    color: var(--accent-2);
+    font-size: 9px;
+  }
+  .navline{
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    color: var(--muted);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    align-items: baseline;
+  }
+  .navline .kw{ color: var(--accent); }
+  .navline .brace{ color: var(--muted); }
+  .navline button{
+    background: none;
+    border: none;
+    color: var(--accent-3);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    cursor: pointer;
+    padding: 2px 3px;
+    position: relative;
+  }
+  .navline button::after{
+    content: '';
+    position: absolute;
+    left: 3px; right: 3px; bottom: -2px;
+    height: 1px;
+    background: var(--accent-2);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform .25s ease;
+  }
+  .navline button:hover::after{ transform: scaleX(1); }
+  .navline button:hover{ color: var(--accent-2); }
+
+  /* ---------- section shell ---------- */
+  section{
+    max-width: var(--maxw);
+    margin: 0 auto;
+    padding: 96px 28px;
+    border-bottom: 1px solid var(--line);
+  }
+  section:last-of-type{ border-bottom: none; }
+
+  .eyebrow{
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    color: var(--comment);
+    margin: 0 0 18px;
+  }
+  .eyebrow .slash{ color: var(--comment); }
+
+  h1,h2,h3{
+    font-family: 'Space Grotesk', sans-serif;
+    margin: 0;
+    letter-spacing: -0.01em;
+  }
+
+  .reveal{
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity .7s cubic-bezier(.16,.8,.3,1), transform .7s cubic-bezier(.16,.8,.3,1);
+  }
+  .reveal.in-view{ opacity: 1; transform: translateY(0); }
+
+  /* ---------- hero ---------- */
+  .hero{
+    padding-top: 120px;
+    padding-bottom: 110px;
+  }
+  .terminal{
+    background: var(--surface);
+    border: 1px solid var(--line-strong);
+    border-radius: var(--radius);
+    overflow: hidden;
+    box-shadow: 0 40px 80px -40px rgba(0,0,0,0.6);
+    animation: terminalGlow 6s ease-in-out infinite;
+  }
+  @keyframes terminalGlow{
+    0%,100%{ box-shadow: 0 40px 80px -40px rgba(0,0,0,0.6), 0 0 0px rgba(242,169,59,0); }
+    50%{ box-shadow: 0 40px 80px -40px rgba(0,0,0,0.6), 0 0 46px -6px rgba(242,169,59,0.28); }
+  }
+  @media (prefers-reduced-motion: reduce){ .terminal{ animation: none; } }
+  .terminal-head{
+    display:flex; align-items:center; gap:8px;
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--line);
+    background: var(--surface-2);
+  }
+  .dot{ width:10px; height:10px; border-radius:50%; }
+  .dot.red{ background:#e5645a; }
+  .dot.yellow{ background:#e5b95a; }
+  .dot.green{ background:#5ac787; }
+  .terminal-title{
+    font-family:'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--muted);
+    margin-left: 8px;
+  }
+  .terminal-body{
+    padding: 26px 22px 30px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+    min-height: 168px;
+  }
+  .terminal-body .prompt{ color: var(--accent-2); }
+  .terminal-body .cmd{ color: var(--paper); }
+  #typedLine{ color: var(--paper); }
+  .cursor{
+    display: inline-block;
+    width: 8px; height: 16px;
+    background: var(--accent);
+    margin-left: 2px;
+    vertical-align: -2px;
+    animation: blink 1s step-end infinite;
+  }
+  @keyframes blink{ 50%{ opacity: 0; } }
+
+  .hero-output{
+    margin-top: 22px;
+    opacity: 0;
+  }
+  .hero-output.show{ opacity: 1; transition: opacity .6s ease; }
+  .hero-name{
+    font-size: clamp(2.2rem, 6vw, 3.6rem);
+    font-weight: 700;
+    line-height: 1.05;
+    text-shadow: 0 0 40px rgba(242,169,59,0.18);
+  }
+  .hero-name .amp{ color: var(--accent); }
+  .hero-role{
+    margin-top: 10px;
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--accent-3);
+    font-size: 15px;
+  }
+  .hero-desc{
+    margin-top: 16px;
+    color: var(--muted);
+    max-width: 52ch;
+    font-size: 15.5px;
+  }
+  .hero-cta{
+    margin-top: 30px;
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+  }
+  .btn{
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13.5px;
+    padding: 12px 20px;
+    border-radius: 8px;
+    border: 1px solid var(--line-strong);
+    cursor: pointer;
+    transition: transform .2s ease, border-color .2s ease, background .2s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .btn-primary{
+    background: var(--accent);
+    color: var(--ink);
+    border-color: var(--accent);
+    font-weight: 600;
+  }
+  .btn-primary:hover{ transform: translateY(-2px); box-shadow: 0 14px 30px -14px rgba(242,169,59,0.55); }
+  .btn-ghost{ color: var(--paper); background: transparent; }
+  .btn-ghost:hover{ border-color: var(--accent-2); color: var(--accent-2); transform: translateY(-2px); }
+
+  /* ---------- about ---------- */
+  .comment-block{
+    color: var(--comment);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13.5px;
+    margin-bottom: 16px;
+  }
+  .about-text{
+    font-size: 17px;
+    color: var(--paper);
+    max-width: 62ch;
+  }
+  .about-text strong{ color: var(--accent-2); font-weight: 600; }
+  .stat-row{
+    display: flex;
+    gap: 40px;
+    margin-top: 42px;
+    flex-wrap: wrap;
+  }
+  .stat b{
+    display: block;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1.8rem;
+    color: var(--paper);
+  }
+  .stat span{
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--muted);
+  }
+
+  /* ---------- skills ---------- */
+  .code-object{
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 26px 24px;
+  }
+  .code-object .punct{ color: var(--muted); }
+  .code-object .key{ color: var(--accent-3); }
+  .skill-group{ margin: 6px 0 18px 18px; }
+  .skill-group:last-child{ margin-bottom: 4px; }
+  .skill-tags{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 10px 0 10px 18px;
+  }
+  .tag{
+    font-size: 12.5px;
+    padding: 6px 11px;
+    border-radius: 6px;
+    background: var(--surface-2);
+    border: 1px solid var(--line-strong);
+    color: var(--accent-2);
+    transition: transform .18s ease, border-color .18s ease, background .18s ease;
+  }
+  .tag:hover{
+    transform: translateY(-2px);
+    border-color: var(--accent-2);
+    background: rgba(110,231,200,0.08);
+    box-shadow: 0 0 20px -4px rgba(110,231,200,0.5);
+  }
+
+  /* ---------- projects ---------- */
+  .project-list{ display: flex; flex-direction: column; gap: 18px; }
+  .project{
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 26px 26px 24px;
+    transition: border-color .25s ease, transform .25s ease, background .25s ease;
+    position: relative;
+    overflow: hidden;
+  }
+  .project::before{
+    content: '';
+    position: absolute; left:0; top:0; bottom:0;
+    width: 3px;
+    background: var(--accent);
+    transform: scaleY(0);
+    transform-origin: bottom;
+    transition: transform .3s ease;
+  }
+  .project:hover{
+    border-color: var(--line-strong);
+    background: var(--surface-2);
+    transform: translateY(-3px);
+    box-shadow: 0 20px 50px -30px rgba(242,169,59,0.35);
+  }
+  .project:hover::before{ transform: scaleY(1); }
+  .project-head{
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .project-sig{
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14.5px;
+  }
+  .project-sig .fn{ color: var(--accent); }
+  .project-sig .name{ color: var(--accent-3); }
+  .project-sig .punct{ color: var(--muted); }
+  .project-links{ display: flex; gap: 14px; font-family: 'JetBrains Mono', monospace; font-size: 12.5px; }
+  .project-links a{ color: var(--muted); border-bottom: 1px solid transparent; transition: color .2s ease, border-color .2s ease; }
+  .project-links a:hover{ color: var(--accent-2); border-color: var(--accent-2); }
+  .project-desc{
+    margin-top: 12px;
+    color: var(--muted);
+    font-size: 15px;
+    max-width: 64ch;
+  }
+  .project-tags{
+    display:flex; flex-wrap: wrap; gap: 8px;
+    margin-top: 16px;
+  }
+  .project-tags span{
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11.5px;
+    color: var(--comment);
+    border: 1px solid var(--line);
+    padding: 4px 9px;
+    border-radius: 5px;
+  }
+
+  /* ---- project thumbnail (key art) ---- */
+  .project.has-thumb{ padding: 0; }
+  .project-body-pad{ padding: 22px 26px 24px; }
+  .project-thumb{
+    position: relative;
+    display: block;
+    width: 100%;
+    aspect-ratio: 800 / 300;
+    overflow: hidden;
+    text-decoration: none;
+    background: #05050b;
+    border-bottom: 1px solid var(--line);
+  }
+  .project-thumb svg{
+    width: 100%;
+    height: 100%;
+    display: block;
+    transition: transform .6s cubic-bezier(.16,.8,.3,1);
+  }
+  .project-thumb:hover svg{ transform: scale(1.045); }
+
+  .thumb-tag{
+    position: absolute;
+    top: 14px; left: 14px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10.5px;
+    letter-spacing: .14em;
+    color: #eafeff;
+    background: rgba(5,5,11,0.55);
+    padding: 5px 11px;
+    border-radius: 20px;
+    border: 1px solid rgba(255,255,255,0.16);
+    backdrop-filter: blur(3px);
+  }
+  .play-pill{
+    position: absolute;
+    bottom: 14px; right: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12.5px;
+    font-weight: 700;
+    color: #05050b;
+    background: #4bf5ff;
+    padding: 9px 16px 9px 13px;
+    border-radius: 30px;
+    box-shadow: 0 10px 26px -8px rgba(75,245,255,0.65);
+    transition: transform .25s ease, box-shadow .25s ease;
+  }
+  .project-thumb:hover .play-pill{
+    transform: scale(1.06);
+    box-shadow: 0 12px 32px -6px rgba(75,245,255,0.8);
+  }
+  .play-tri{
+    width: 0; height: 0;
+    border-left: 9px solid #05050b;
+    border-top: 6px solid transparent;
+    border-bottom: 6px solid transparent;
+    margin-left: 1px;
+  }
+
+  @keyframes ebTwinkle{ 0%,100%{ opacity: .9; } 50%{ opacity: .25; } }
+  .eb-stars circle{ animation: ebTwinkle 2.6s ease-in-out infinite; }
+
+  @keyframes ebDrift{ 0%{ transform: translateX(0); } 100%{ transform: translateX(-16px); } }
+  .eb-enemies{ animation: ebDrift 3.2s ease-in-out infinite alternate; }
+
+  @keyframes ebBob{ 0%,100%{ transform: translateY(0); } 50%{ transform: translateY(-7px); } }
+  .eb-ship{ animation: ebBob 2.8s ease-in-out infinite; transform-origin: center; }
+
+  @keyframes ebStreak{
+    0%{ transform: translateX(-60px); opacity: 0; }
+    15%{ opacity: .45; }
+    100%{ transform: translateX(760px); opacity: 0; }
+  }
+  .eb-streak{ animation: ebStreak 3s linear infinite; }
+
+  @media (prefers-reduced-motion: reduce){
+    .eb-stars circle, .eb-enemies, .eb-ship, .eb-streak{ animation: none !important; }
+  }
+
+  @keyframes mtOrbFloat{ 0%{ transform: translate(0,0); } 100%{ transform: translate(18px,-14px); } }
+  .mt-orb{ animation: mtOrbFloat 5s ease-in-out infinite alternate; }
+
+  @keyframes mtBarGrow{ 0%,100%{ transform: scaleY(.7); } 50%{ transform: scaleY(1); } }
+  .mt-bar{ animation: mtBarGrow 2.4s ease-in-out infinite; transform-box: fill-box; transform-origin: 50% 100%; }
+
+  @keyframes mtCoinBob{ 0%,100%{ transform: translateY(0); } 50%{ transform: translateY(-8px); } }
+  .mt-coin{ animation: mtCoinBob 3s ease-in-out infinite; transform-box: fill-box; transform-origin: 50% 50%; }
+
+  @keyframes mtGlowPulse{ 0%,100%{ opacity: .35; } 50%{ opacity: .7; } }
+  .mt-coin-glow{ animation: mtGlowPulse 2.4s ease-in-out infinite; }
+
+  @keyframes vdChipRise{ 0%{ transform: translateY(0); opacity: 0; } 20%{ opacity: .85; } 100%{ transform: translateY(-74px); opacity: 0; } }
+  .vd-chip{ animation: vdChipRise 3.4s ease-in infinite; transform-box: fill-box; transform-origin: 50% 50%; }
+
+  @keyframes vdIconPulse{ 0%,100%{ opacity: .4; transform: scale(1); } 50%{ opacity: .75; transform: scale(1.1); } }
+  .vd-icon-glow{ animation: vdIconPulse 2.6s ease-in-out infinite; transform-box: fill-box; transform-origin: 50% 50%; }
+
+  @keyframes vdProgress{ 0%{ transform: scaleX(0); } 60%{ transform: scaleX(1); } 100%{ transform: scaleX(0); } }
+  .vd-progress-fill{ animation: vdProgress 3s ease-in-out infinite; transform-box: fill-box; transform-origin: 0% 50%; }
+
+  @keyframes vdArrowBob{ 0%,100%{ transform: translateY(0); } 50%{ transform: translateY(6px); } }
+  .vd-arrow{ animation: vdArrowBob 2.2s ease-in-out infinite; transform-box: fill-box; transform-origin: 50% 50%; }
+
+  @media (prefers-reduced-motion: reduce){
+    .mt-orb, .mt-bar, .mt-coin, .mt-coin-glow, .vd-chip, .vd-icon-glow, .vd-progress-fill, .vd-arrow{ animation: none !important; }
+  }
+
+  /* ---------- timeline ---------- */
+  .timeline{ margin-top: 8px; }
+  .commit{
+    display: grid;
+    grid-template-columns: 90px 1fr;
+    gap: 18px;
+    padding: 18px 0;
+    border-top: 1px solid var(--line);
+    position: relative;
+  }
+  .commit:first-child{ border-top: none; }
+  .commit-date{
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--comment);
+    padding-top: 3px;
+  }
+  .commit-hash{
+    color: var(--accent-2);
+  }
+  .commit-body h3{
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--paper);
+  }
+  .commit-body .role{
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12.5px;
+    color: var(--accent-3);
+    margin-top: 2px;
+  }
+  .commit-body p{
+    margin-top: 8px;
+    color: var(--muted);
+    font-size: 14.5px;
+    max-width: 58ch;
+  }
+
+  /* ---------- contact ---------- */
+  .api-block{
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    overflow: hidden;
+  }
+  .api-req{
+    padding: 18px 24px;
+    border-bottom: 1px solid var(--line);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    color: var(--muted);
+  }
+  .api-req .verb{
+    color: var(--ink);
+    background: var(--accent-2);
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 4px;
+    margin-right: 10px;
+  }
+  .contact-grid{
+    padding: 26px 24px 30px;
+    display: grid;
+    gap: 16px;
+  }
+  @media (min-width: 640px){ .contact-grid{ grid-template-columns: 1fr 1fr; } }
+  .contact-link{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 18px;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    transition: border-color .2s ease, transform .2s ease, background .2s ease;
+  }
+  .contact-link:hover{
+    border-color: var(--accent-2);
+    transform: translateY(-2px);
+    background: var(--surface-2);
+    box-shadow: 0 0 26px -6px rgba(110,231,200,0.4);
+  }
+  .contact-link .k{
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--comment);
+    display: block;
+    margin-bottom: 4px;
+  }
+  .contact-link .v{
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+    color: var(--paper);
+  }
+  .contact-link .arrow{ color: var(--accent-2); transition: transform .2s ease; }
+  .contact-link:hover .arrow{ transform: translateX(4px); }
+
+  footer{
+    max-width: var(--maxw);
+    margin: 0 auto;
+    padding: 40px 28px 70px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12.5px;
+    color: var(--comment);
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  a:focus-visible, button:focus-visible{
+    outline: 2px solid var(--accent-2);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+
+  /* ---- calm ambient sound toggle ---- */
+  .ambient-toggle{
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    z-index: 30;
+    width: 52px; height: 52px;
+    border-radius: 50%;
+    border: 1px solid var(--line-strong);
+    background: var(--surface);
+    color: var(--accent-2);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 17px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 12px 30px -10px rgba(0,0,0,0.65);
+    transition: transform .25s ease, border-color .25s ease, background .25s ease, color .25s ease;
+  }
+  .ambient-toggle:hover{ transform: translateY(-3px); border-color: var(--accent-2); }
+  .ambient-toggle.playing{
+    background: var(--accent-2);
+    border-color: var(--accent-2);
+    color: var(--ink);
+    animation: ambientPulse 2.6s ease-in-out infinite;
+  }
+  @keyframes ambientPulse{
+    0%,100%{ box-shadow: 0 0 0 0 rgba(110,231,200,0.45), 0 12px 30px -10px rgba(0,0,0,0.65); }
+    50%{ box-shadow: 0 0 0 14px rgba(110,231,200,0), 0 12px 30px -10px rgba(0,0,0,0.65); }
+  }
+  @media (prefers-reduced-motion: reduce){ .ambient-toggle.playing{ animation: none; } }
+</style>
+</head>
+<body>
+
+<div class="bg-grid" aria-hidden="true"></div>
+<div class="bg-orb o1" aria-hidden="true"></div>
+<div class="bg-orb o2" aria-hidden="true"></div>
+<div class="bg-orb o3" aria-hidden="true"></div>
+<div class="gutter" aria-hidden="true"><div class="gutter-inner" id="gutterInner"></div></div>
+
+<div class="content-shell">
+
+  <div class="topbar">
+    <div class="topbar-inner">
+      <div class="tab">zayed.dev/portfolio.tsx</div>
+      <nav class="navline">
+        <span class="kw">import</span><span class="brace">{'{'}</span>
+        <button data-target="about">About</button><span class="brace">,</span>
+        <button data-target="skills">Skills</button><span class="brace">,</span>
+        <button data-target="work">Work</button><span class="brace">,</span>
+        <button data-target="contact">Contact</button>
+        <span class="brace">{'}'}</span>
+      </nav>
+    </div>
+  </div>
+
+  <!-- ================= HERO ================= -->
+  <section class="hero" id="top">
+    <div class="terminal reveal in-view">
+      <div class="terminal-head">
+        <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
+        <span class="terminal-title">zsh — zayed@dev: ~</span>
+      </div>
+      <div class="terminal-body">
+        <div><span class="prompt">➜</span> <span class="cmd">~ whoami</span></div>
+        <div id="typedLine">&nbsp;</div>
+
+        <div class="hero-output" id="heroOutput">
+          <div class="hero-name">Zayed<span class="amp"> // </span>Developer</div>
+          <div class="hero-role">building for the web — one clean commit at a time</div>
+          <p class="hero-desc">I design and build fast, reliable software — from interfaces people enjoy using to the systems running quietly underneath. Currently open to interesting problems and good teams.</p>
+          <div class="hero-cta">
+            <a href="#work" class="btn btn-primary">View work →</a>
+            <a href="#contact" class="btn btn-ghost">Say hello</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= ABOUT ================= -->
+  <section id="about">
+    <p class="eyebrow reveal"><span class="slash">//</span> about</p>
+    <div class="comment-block reveal">/**<br>&nbsp;* a little context before the code<br>&nbsp;*/</div>
+    <p class="about-text reveal">
+      I'm Zayed, a developer who likes turning ambiguous ideas into software that actually works.
+      I care about <strong>readable code</strong>, <strong>fast interfaces</strong>, and products that
+      respect the people using them. Most days you'll find me somewhere between a design file and a
+      terminal, trying to close the gap between the two.
+    </p>
+    <div class="stat-row reveal">
+      <div class="stat"><b>3+</b><span>years building</span></div>
+      <div class="stat"><b>20+</b><span>projects shipped</span></div>
+      <div class="stat"><b>∞</b><span>tabs open</span></div>
+    </div>
+  </section>
+
+  <!-- ================= SKILLS ================= -->
+  <section id="skills">
+    <p class="eyebrow reveal"><span class="slash">//</span> skills</p>
+    <div class="code-object reveal">
+      <div><span class="key">const</span> <span class="key" style="color:var(--paper)">skills</span> <span class="punct">= {'{'}</span></div>
+
+      <div class="skill-group">
+        <div><span class="key">frontend:</span> <span class="punct">[</span></div>
+        <div class="skill-tags">
+          <span class="tag">JavaScript</span><span class="tag">TypeScript</span>
+          <span class="tag">React</span><span class="tag">Next.js</span>
+          <span class="tag">Tailwind CSS</span><span class="tag">HTML / CSS</span>
+        </div>
+        <div class="punct" style="margin-left:18px;">],</div>
+      </div>
+
+      <div class="skill-group">
+        <div><span class="key">backend:</span> <span class="punct">[</span></div>
+        <div class="skill-tags">
+          <span class="tag">Node.js</span><span class="tag">Express</span>
+          <span class="tag">Python</span><span class="tag">REST APIs</span>
+          <span class="tag">PostgreSQL</span><span class="tag">MongoDB</span>
+        </div>
+        <div class="punct" style="margin-left:18px;">],</div>
+      </div>
+
+      <div class="skill-group">
+        <div><span class="key">tools:</span> <span class="punct">[</span></div>
+        <div class="skill-tags">
+          <span class="tag">Git</span><span class="tag">Docker</span>
+          <span class="tag">Figma</span><span class="tag">Linux</span>
+          <span class="tag">CI / CD</span>
+        </div>
+        <div class="punct" style="margin-left:18px;">]</div>
+      </div>
+
+      <div class="punct">{'}'};</div>
+    </div>
+  </section>
+
+  <!-- ================= PROJECTS ================= -->
+  <section id="work">
+    <p class="eyebrow reveal"><span class="slash">//</span> selected work</p>
+    <div class="project-list">
+
+      <div class="project has-thumb reveal">
+        <a class="project-thumb" href="eclipse-blitz.html" target="_blank" rel="noopener" aria-label="Play Eclipse Blitz">
+          <svg viewBox="0 0 800 300" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="ebBg" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#0d0e1a"/>
+                <stop offset="100%" stop-color="#05050b"/>
+              </linearGradient>
+              <radialGradient id="ebGlow" cx="52%" cy="42%" r="65%">
+                <stop offset="0%" stop-color="#7c5cff" stop-opacity="0.32"/>
+                <stop offset="100%" stop-color="#7c5cff" stop-opacity="0"/>
+              </radialGradient>
+              <linearGradient id="ebShip" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#eafeff"/>
+                <stop offset="100%" stop-color="#4bf5ff"/>
+              </linearGradient>
+              <filter id="ebBlur" x="-60%" y="-60%" width="220%" height="220%">
+                <feGaussianBlur stdDeviation="7"/>
+              </filter>
+            </defs>
+
+            <rect width="800" height="300" fill="url(#ebBg)"/>
+            <rect width="800" height="300" fill="url(#ebGlow)"/>
+
+            <!-- stars -->
+            <g class="eb-stars" fill="#ffffff">
+              <circle cx="36" cy="38" r="1.4" opacity="0.8" style="animation-delay:.1s"/>
+              <circle cx="120" cy="90" r="1" opacity="0.6" style="animation-delay:.6s"/>
+              <circle cx="210" cy="34" r="1.6" opacity="0.9" style="animation-delay:1.1s"/>
+              <circle cx="300" cy="220" r="1.1" opacity="0.7" style="animation-delay:.3s"/>
+              <circle cx="380" cy="60" r="1.3" opacity="0.8" style="animation-delay:1.6s"/>
+              <circle cx="470" cy="240" r="1" opacity="0.6" style="animation-delay:.8s"/>
+              <circle cx="560" cy="50" r="1.5" opacity="0.9" style="animation-delay:.2s"/>
+              <circle cx="700" cy="200" r="1.2" opacity="0.7" style="animation-delay:1.3s"/>
+              <circle cx="750" cy="60" r="1" opacity="0.6" style="animation-delay:.5s"/>
+              <circle cx="640" cy="250" r="1.3" opacity="0.8" style="animation-delay:1s"/>
+            </g>
+
+            <!-- speed streaks -->
+            <g stroke="#ffe14b" stroke-width="2" stroke-linecap="round">
+              <line class="eb-streak" x1="0" y1="95" x2="130" y2="95" style="animation-delay:0s"/>
+              <line class="eb-streak" x1="0" y1="150" x2="150" y2="150" style="animation-delay:1s"/>
+              <line class="eb-streak" x1="0" y1="205" x2="120" y2="205" style="animation-delay:2s"/>
+            </g>
+
+            <!-- enemies -->
+            <g class="eb-enemies">
+              <polygon points="648,80 666,98 648,116 630,98" fill="#ff3b5c" filter="url(#ebBlur)" opacity="0.55"/>
+              <polygon points="648,80 666,98 648,116 630,98" fill="#ff3b5c"/>
+              <polygon points="710,150 726,166 710,182 694,166" fill="#b34bff" filter="url(#ebBlur)" opacity="0.5"/>
+              <polygon points="710,150 726,166 710,182 694,166" fill="#b34bff"/>
+              <polygon points="600,205 615,220 600,235 585,220" fill="#ff3b5c" filter="url(#ebBlur)" opacity="0.5"/>
+              <polygon points="600,205 615,220 600,235 585,220" fill="#ff3b5c"/>
+            </g>
+
+            <!-- player ship -->
+            <g class="eb-ship">
+              <ellipse cx="98" cy="150" rx="16" ry="6" fill="#4bf5ff" opacity="0.55" filter="url(#ebBlur)"/>
+              <polygon points="158,150 118,178 128,150 118,122" fill="url(#ebShip)"/>
+            </g>
+
+            <!-- title -->
+            <text x="404" y="176" text-anchor="middle" font-family="Orbitron, sans-serif" font-weight="900" font-size="44" fill="#ff3b5c" opacity="0.55" filter="url(#ebBlur)">ECLIPSE BLITZ</text>
+            <text x="400" y="172" text-anchor="middle" font-family="Orbitron, sans-serif" font-weight="900" font-size="44" fill="#ffffff" letter-spacing="2">ECLIPSE BLITZ</text>
+            <text x="400" y="198" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-weight="500" font-size="13" fill="#c8b8ff" letter-spacing="3" opacity="0.85">ARCADE SPACE SHOOTER</text>
+          </svg>
+          <span class="thumb-tag">GAME</span>
+          <span class="play-pill"><span class="play-tri"></span>Play now</span>
+        </a>
+
+        <div class="project-body-pad">
+          <div class="project-head">
+            <div class="project-sig"><span class="fn">function</span> <span class="name">EclipseBlitz</span><span class="punct">()</span></div>
+            <div class="project-links"><a href="eclipse-blitz.html" target="_blank" rel="noopener">Play ↗</a></div>
+          </div>
+          <p class="project-desc">A fast, neon-drenched arcade space shooter built from scratch — dodge, blitz through waves of enemies, and chase the high score. Runs entirely in the browser with a full HUD, on-screen controls, and online co-op mode.</p>
+          <div class="project-tags"><span>Canvas API</span><span>JavaScript</span><span>Game Design</span><span>Multiplayer</span></div>
+        </div>
+      </div>
+
+      <div class="project has-thumb reveal">
+        <a class="project-thumb" href="money-tracker.html" target="_blank" rel="noopener" aria-label="Open Money Tracker">
+          <svg viewBox="0 0 800 300" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="mtBg" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#1a1a2e"/>
+                <stop offset="100%" stop-color="#0d0b1a"/>
+              </linearGradient>
+              <radialGradient id="mtGlow" cx="50%" cy="40%" r="65%">
+                <stop offset="0%" stop-color="#bb86fc" stop-opacity="0.28"/>
+                <stop offset="100%" stop-color="#bb86fc" stop-opacity="0"/>
+              </radialGradient>
+              <linearGradient id="mtCoinGrad" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#ffe66d"/>
+                <stop offset="100%" stop-color="#f2b93b"/>
+              </linearGradient>
+              <filter id="mtBlur" x="-60%" y="-60%" width="220%" height="220%">
+                <feGaussianBlur stdDeviation="10"/>
+              </filter>
+            </defs>
+
+            <rect width="800" height="300" fill="url(#mtBg)"/>
+            <rect width="800" height="300" fill="url(#mtGlow)"/>
+
+            <!-- ambient orbs -->
+            <g>
+              <circle class="mt-orb" cx="120" cy="60" r="60" fill="#ff6b6b" opacity="0.18" filter="url(#mtBlur)" style="animation-delay:0s"/>
+              <circle class="mt-orb" cx="700" cy="70" r="70" fill="#4ecdc4" opacity="0.16" filter="url(#mtBlur)" style="animation-delay:.8s"/>
+              <circle class="mt-orb" cx="600" cy="250" r="55" fill="#ffe66d" opacity="0.14" filter="url(#mtBlur)" style="animation-delay:1.4s"/>
+            </g>
+
+            <!-- chart bars -->
+            <g>
+              <rect class="mt-bar" x="512" y="200" width="26" height="70" rx="4" fill="#6fcf97" style="animation-delay:0s"/>
+              <rect class="mt-bar" x="550" y="175" width="26" height="95" rx="4" fill="#f28b82" style="animation-delay:.3s"/>
+              <rect class="mt-bar" x="588" y="150" width="26" height="120" rx="4" fill="#6fcf97" style="animation-delay:.6s"/>
+              <rect class="mt-bar" x="626" y="190" width="26" height="80" rx="4" fill="#f28b82" style="animation-delay:.9s"/>
+              <rect class="mt-bar" x="664" y="165" width="26" height="105" rx="4" fill="#6fcf97" style="animation-delay:1.2s"/>
+            </g>
+
+            <!-- coin -->
+            <g class="mt-coin">
+              <circle class="mt-coin-glow" cx="150" cy="205" r="46" fill="#bb86fc" filter="url(#mtBlur)"/>
+              <circle cx="150" cy="205" r="30" fill="url(#mtCoinGrad)"/>
+              <text x="150" y="215" text-anchor="middle" font-family="Orbitron, sans-serif" font-weight="800" font-size="26" fill="#3a2a00">$</text>
+            </g>
+
+            <!-- title -->
+            <text x="404" y="78" text-anchor="middle" font-family="Orbitron, sans-serif" font-weight="900" font-size="38" fill="#bb86fc" opacity="0.55" filter="url(#mtBlur)">MONEY TRACKER</text>
+            <text x="400" y="74" text-anchor="middle" font-family="Orbitron, sans-serif" font-weight="900" font-size="38" fill="#ffffff" letter-spacing="1.5">MONEY TRACKER</text>
+            <text x="400" y="100" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-weight="500" font-size="12.5" fill="#6fcf97" letter-spacing="3" opacity="0.9">PERSONAL FINANCE APP</text>
+          </svg>
+          <span class="thumb-tag">APP</span>
+          <span class="play-pill"><span class="play-tri"></span>Open now</span>
+        </a>
+
+        <div class="project-body-pad">
+          <div class="project-head">
+            <div class="project-sig"><span class="fn">function</span> <span class="name">MoneyTracker</span><span class="punct">()</span></div>
+            <div class="project-links"><a href="money-tracker.html" target="_blank" rel="noopener">Open ↗</a></div>
+          </div>
+          <p class="project-desc">A personal finance tracker for keeping an eye on income and spending — log transactions, see balances update instantly, and get a clear picture of where your money's going, wrapped in a smooth animated interface.</p>
+          <div class="project-tags"><span>JavaScript</span><span>LocalStorage</span><span>UI/UX</span></div>
+        </div>
+      </div>
+
+      <div class="project has-thumb reveal">
+        <a class="project-thumb" href="video-downloader.html" target="_blank" rel="noopener" aria-label="Open Video Downloader">
+          <svg viewBox="0 0 800 300" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="vdBg" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#12111c"/>
+                <stop offset="100%" stop-color="#0a0a12"/>
+              </linearGradient>
+              <radialGradient id="vdGlowL" cx="15%" cy="30%" r="55%">
+                <stop offset="0%" stop-color="#7c5cfc" stop-opacity="0.22"/>
+                <stop offset="100%" stop-color="#7c5cfc" stop-opacity="0"/>
+              </radialGradient>
+              <radialGradient id="vdGlowR" cx="85%" cy="60%" r="55%">
+                <stop offset="0%" stop-color="#fc5c9c" stop-opacity="0.2"/>
+                <stop offset="100%" stop-color="#fc5c9c" stop-opacity="0"/>
+              </radialGradient>
+              <linearGradient id="vdIconGrad" x1="0" y1="0" x2="1" y2="0">
+                <stop offset="0%" stop-color="#7c5cfc"/>
+                <stop offset="50%" stop-color="#5c9cfc"/>
+                <stop offset="100%" stop-color="#fc5c9c"/>
+              </linearGradient>
+              <filter id="vdBlur" x="-60%" y="-60%" width="220%" height="220%">
+                <feGaussianBlur stdDeviation="9"/>
+              </filter>
+            </defs>
+
+            <rect width="800" height="300" fill="url(#vdBg)"/>
+            <rect width="800" height="300" fill="url(#vdGlowL)"/>
+            <rect width="800" height="300" fill="url(#vdGlowR)"/>
+
+            <!-- rising file chips -->
+            <g fill="url(#vdIconGrad)">
+              <rect class="vd-chip" x="230" y="230" width="26" height="18" rx="4" opacity="0.8" style="animation-delay:0s"/>
+              <rect class="vd-chip" x="560" y="235" width="26" height="18" rx="4" opacity="0.8" style="animation-delay:1s"/>
+              <rect class="vd-chip" x="300" y="220" width="20" height="14" rx="3" opacity="0.7" style="animation-delay:2s"/>
+              <rect class="vd-chip" x="500" y="215" width="20" height="14" rx="3" opacity="0.7" style="animation-delay:2.6s"/>
+            </g>
+
+            <!-- download icon -->
+            <g>
+              <circle class="vd-icon-glow" cx="400" cy="140" r="58" fill="#7c5cfc" filter="url(#vdBlur)"/>
+              <g class="vd-arrow" stroke="url(#vdIconGrad)" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" fill="none">
+                <line x1="400" y1="92" x2="400" y2="150"/>
+                <polyline points="374,126 400,152 426,126"/>
+                <line x1="366" y1="178" x2="434" y2="178"/>
+              </g>
+            </g>
+
+            <!-- progress bar -->
+            <rect x="270" y="228" width="260" height="10" rx="5" fill="rgba(255,255,255,0.08)"/>
+            <rect class="vd-progress-fill" x="270" y="228" width="260" height="10" rx="5" fill="url(#vdIconGrad)"/>
+
+            <!-- title -->
+            <text x="404" y="70" text-anchor="middle" font-family="Orbitron, sans-serif" font-weight="900" font-size="36" fill="#7c5cfc" opacity="0.5" filter="url(#vdBlur)">SNAPSAVE</text>
+            <text x="400" y="66" text-anchor="middle" font-family="Orbitron, sans-serif" font-weight="900" font-size="36" fill="#ffffff" letter-spacing="2">SNAPSAVE</text>
+            <text x="400" y="266" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-weight="500" font-size="12.5" fill="#5c9cfc" letter-spacing="3" opacity="0.9">VIDEO &amp; AUDIO DOWNLOADER</text>
+          </svg>
+          <span class="thumb-tag">APP</span>
+          <span class="play-pill"><span class="play-tri"></span>Open now</span>
+        </a>
+
+        <div class="project-body-pad">
+          <div class="project-head">
+            <div class="project-sig"><span class="fn">function</span> <span class="name">VideoDownloader</span><span class="punct">()</span></div>
+            <div class="project-links"><a href="video-downloader.html" target="_blank" rel="noopener">Open ↗</a></div>
+          </div>
+          <p class="project-desc">A clean, glassmorphic downloader tool — paste a link, pick a format, and pull the file. Built around a simple three-step flow with a lot of attention on the small interaction details.</p>
+          <div class="project-tags"><span>JavaScript</span><span>API Integration</span><span>UI/UX</span></div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ================= CONTACT ================= -->
+  <section id="contact">
+    <p class="eyebrow reveal"><span class="slash">//</span> contact</p>
+    <div class="api-block reveal">
+      <div class="api-req"><span class="verb">POST</span>/contact — <span style="color:var(--accent-2)">open to work, collabs, and good conversations</span></div>
+      <div class="contact-grid">
+        <a class="contact-link" href="mailto:kari24uvi@gmail.com">
+          <span><span class="k">email</span><span class="v">kari24uvi@gmail.com</span></span>
+          <span class="arrow">→</span>
+        </a>
+        <a class="contact-link" href="#" target="_blank" rel="noopener">
+          <span><span class="k">github</span><span class="v">github.com/zayed</span></span>
+          <span class="arrow">→</span>
+        </a>
+        <a class="contact-link" href="https://zayed12.itch.io/" target="_blank" rel="noopener">
+          <span><span class="k">itch.io</span><span class="v">zayed12.itch.io</span></span>
+          <span class="arrow">→</span>
+        </a>
+        <a class="contact-link" href="#" target="_blank" rel="noopener">
+          <span><span class="k">x / twitter</span><span class="v">@zayed</span></span>
+          <span class="arrow">→</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <span>© <span id="year"></span> Zayed. Built line by line.</span>
+    <span>&lt;/portfolio&gt;</span>
+  </footer>
+
+</div>
+
+<button class="ambient-toggle" id="ambientToggle" type="button" title="Play calm ambient sound" aria-label="Play calm ambient sound" aria-pressed="false">
+  <span id="ambientIcon">♪</span>
+</button>
+
+<script>
+  // year
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  // gutter line numbers
+  (function(){
+    const gutter = document.getElementById('gutterInner');
+    const lineHeight = 28;
+    function fill(){
+      const total = Math.ceil(document.body.scrollHeight / lineHeight) + 20;
+      let html = '';
+      for(let i=1;i<=total;i++){ html += i + '<br>'; }
+      gutter.innerHTML = html;
+    }
+    fill();
+    window.addEventListener('resize', fill);
+  })();
+
+  // terminal typing effect
+  (function(){
+    const el = document.getElementById('typedLine');
+    const output = document.getElementById('heroOutput');
+    const text = "developer, based on the internet.";
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    if(reduced){
+      el.textContent = text;
+      output.classList.add('show');
+      return;
+    }
+
+    let i = 0;
+    el.innerHTML = '<span class="cursor"></span>';
+    function type(){
+      if(i <= text.length){
+        el.innerHTML = text.slice(0, i) + '<span class="cursor"></span>';
+        i++;
+        setTimeout(type, 32);
+      } else {
+        setTimeout(() => output.classList.add('show'), 200);
+      }
+    }
+    setTimeout(type, 400);
+  })();
+
+  // scroll reveal
+  (function(){
+    const items = document.querySelectorAll('.reveal');
+    const io = new IntersectionObserver((entries)=>{
+      entries.forEach(e=>{
+        if(e.isIntersecting){
+          e.target.classList.add('in-view');
+          io.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.15 });
+    items.forEach(it=>io.observe(it));
+  })();
+
+  // nav smooth scroll (already handled by CSS scroll-behavior + anchors)
+  document.querySelectorAll('.navline button').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      const target = document.getElementById(btn.dataset.target);
+      if(target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  });
+
+  // calm ambient soundscape — generated in-browser, so no external audio files
+  (function(){
+    const btn = document.getElementById('ambientToggle');
+    const icon = document.getElementById('ambientIcon');
+    let ctx = null;
+    let master = null;
+    let nodes = [];
+    let playing = false;
+
+    function buildGraph(){
+      master = ctx.createGain();
+      master.gain.value = 0;
+      master.connect(ctx.destination);
+      master.gain.linearRampToValueAtTime(0.045, ctx.currentTime + 3);
+
+      const filter = ctx.createBiquadFilter();
+      filter.type = 'lowpass';
+      filter.frequency.value = 1100;
+      filter.Q.value = 0.6;
+      filter.connect(master);
+
+      // warm, comfortable chord (C major add9) — triangle waves, gently detuned in pairs for a soft chorus
+      const notes = [130.81, 196.00, 261.63, 329.63];
+      notes.forEach((f, i) => {
+        [-4, 4].forEach(detune => {
+          const osc = ctx.createOscillator();
+          osc.type = 'triangle';
+          osc.frequency.value = f;
+          osc.detune.value = detune;
+          const g = ctx.createGain();
+          g.gain.value = 0.26 / (i + 1);
+          osc.connect(g);
+          g.connect(filter);
+          osc.start();
+          nodes.push(osc, g);
+        });
+      });
+
+      // soft filtered noise bed underneath, like gentle room tone — adds warmth without drawing attention
+      const bufferSize = 2 * ctx.sampleRate;
+      const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
+      const data = buffer.getChannelData(0);
+      for(let i = 0; i < bufferSize; i++){ data[i] = (Math.random() * 2 - 1) * 0.6; }
+      const noise = ctx.createBufferSource();
+      noise.buffer = buffer;
+      noise.loop = true;
+      const noiseFilter = ctx.createBiquadFilter();
+      noiseFilter.type = 'lowpass';
+      noiseFilter.frequency.value = 480;
+      const noiseGain = ctx.createGain();
+      noiseGain.gain.value = 0.02;
+      noise.connect(noiseFilter);
+      noiseFilter.connect(noiseGain);
+      noiseGain.connect(master);
+      noise.start();
+      nodes.push(noise, noiseFilter, noiseGain);
+
+      // slow filter movement so the pad breathes instead of sitting static
+      const lfo = ctx.createOscillator();
+      lfo.frequency.value = 0.035;
+      const lfoGain = ctx.createGain();
+      lfoGain.gain.value = 220;
+      lfo.connect(lfoGain);
+      lfoGain.connect(filter.frequency);
+      lfo.start();
+      nodes.push(lfo, lfoGain);
+    }
+
+    function teardown(){
+      if(!ctx) return;
+      const now = ctx.currentTime;
+      if(master) master.gain.linearRampToValueAtTime(0, now + 1.2);
+      const old = nodes;
+      nodes = [];
+      setTimeout(() => {
+        old.forEach(n => {
+          try{ n.stop && n.stop(); }catch(e){}
+          try{ n.disconnect(); }catch(e){}
+        });
+        if(master){ master.disconnect(); master = null; }
+      }, 1300);
+    }
+
+    function setUI(isPlaying){
+      playing = isPlaying;
+      btn.classList.toggle('playing', isPlaying);
+      icon.textContent = isPlaying ? '❙❙' : '♪';
+      btn.title = isPlaying ? 'Pause calm ambient sound' : 'Play calm ambient sound';
+      btn.setAttribute('aria-label', btn.title);
+      btn.setAttribute('aria-pressed', String(isPlaying));
+    }
+
+    function play(){
+      ctx = ctx || new (window.AudioContext || window.webkitAudioContext)();
+      buildGraph();
+      ctx.resume().catch(() => {});
+      setUI(true);
+    }
+
+    function pause(){
+      teardown();
+      setUI(false);
+    }
+
+    btn.addEventListener('click', () => { playing ? pause() : play(); });
+
+    // play by default — browsers may hold actual audio until the first
+    // interaction, so we build the graph now and resume it on first gesture
+    play();
+    const resumeOnGesture = () => {
+      if(ctx && ctx.state !== 'running'){ ctx.resume().catch(() => {}); }
+    };
+    ['click', 'keydown', 'touchstart'].forEach(evt =>
+      document.addEventListener(evt, resumeOnGesture, { once: true })
+    );
+  })();
+</script>
+
+</body>
+</html>
