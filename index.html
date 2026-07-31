@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1697216856226307"
      crossorigin="anonymous"></script>
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Zayed — Software Developer</title>
 <meta name="description" content="Zayed — software developer building fast, thoughtful products for the web.">
@@ -13,7 +13,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
 
 <style>
-  /* ===== all your original styles – unchanged ===== */
+  /* ===== ORIGINAL PORTFOLIO STYLES (unchanged) ===== */
   :root{
     --ink: #0a0d12;
     --surface: #10141c;
@@ -50,12 +50,9 @@
   }
 
   ::selection{ background: var(--accent); color: var(--ink); }
-
   a{ color: inherit; text-decoration: none; }
-
   .mono{ font-family: 'JetBrains Mono', monospace; }
 
-  /* ---------- background grid ---------- */
   .bg-grid{
     position: fixed;
     inset: 0;
@@ -87,7 +84,6 @@
   @keyframes orbFloatC{ 0%{ transform: translate(0,0); } 100%{ transform: translate(50px,-60px); } }
   @media (prefers-reduced-motion: reduce){ .bg-orb{ animation: none !important; } }
 
-  /* ---------- line-number gutter ---------- */
   .gutter{
     position: fixed;
     top: 0; left: 0; bottom: 0;
@@ -117,7 +113,6 @@
     .content-shell{ margin-left: var(--gutter-w); }
   }
 
-  /* ---------- top bar ---------- */
   .topbar{
     position: sticky;
     top: 0;
@@ -183,7 +178,6 @@
   .navline button:hover::after{ transform: scaleX(1); }
   .navline button:hover{ color: var(--accent-2); }
 
-  /* ---------- section shell ---------- */
   section{
     max-width: var(--maxw);
     margin: 0 auto;
@@ -213,7 +207,6 @@
   }
   .reveal.in-view{ opacity: 1; transform: translateY(0); }
 
-  /* ---------- hero ---------- */
   .hero{
     padding-top: 120px;
     padding-bottom: 110px;
@@ -318,7 +311,6 @@
   .btn-ghost{ color: var(--paper); background: transparent; }
   .btn-ghost:hover{ border-color: var(--accent-2); color: var(--accent-2); transform: translateY(-2px); }
 
-  /* ---------- about ---------- */
   .comment-block{
     color: var(--comment);
     font-family: 'JetBrains Mono', monospace;
@@ -349,7 +341,6 @@
     color: var(--muted);
   }
 
-  /* ---------- skills ---------- */
   .code-object{
     font-family: 'JetBrains Mono', monospace;
     font-size: 14px;
@@ -384,7 +375,6 @@
     box-shadow: 0 0 20px -4px rgba(110,231,200,0.5);
   }
 
-  /* ---------- projects ---------- */
   .project-list{ display: flex; flex-direction: column; gap: 18px; }
   .project{
     background: var(--surface);
@@ -447,7 +437,6 @@
     border-radius: 5px;
   }
 
-  /* ---- project thumbnail (key art) ---- */
   .project.has-thumb{ padding: 0; }
   .project-body-pad{ padding: 22px 26px 24px; }
   .project-thumb{
@@ -509,55 +498,6 @@
     margin-left: 1px;
   }
 
-  @keyframes ebTwinkle{ 0%,100%{ opacity: .9; } 50%{ opacity: .25; } }
-  .eb-stars circle{ animation: ebTwinkle 2.6s ease-in-out infinite; }
-
-  @keyframes ebDrift{ 0%{ transform: translateX(0); } 100%{ transform: translateX(-16px); } }
-  .eb-enemies{ animation: ebDrift 3.2s ease-in-out infinite alternate; }
-
-  @keyframes ebBob{ 0%,100%{ transform: translateY(0); } 50%{ transform: translateY(-7px); } }
-  .eb-ship{ animation: ebBob 2.8s ease-in-out infinite; transform-origin: center; }
-
-  @keyframes ebStreak{
-    0%{ transform: translateX(-60px); opacity: 0; }
-    15%{ opacity: .45; }
-    100%{ transform: translateX(760px); opacity: 0; }
-  }
-  .eb-streak{ animation: ebStreak 3s linear infinite; }
-
-  @media (prefers-reduced-motion: reduce){
-    .eb-stars circle, .eb-enemies, .eb-ship, .eb-streak{ animation: none !important; }
-  }
-
-  @keyframes mtOrbFloat{ 0%{ transform: translate(0,0); } 100%{ transform: translate(18px,-14px); } }
-  .mt-orb{ animation: mtOrbFloat 5s ease-in-out infinite alternate; }
-
-  @keyframes mtBarGrow{ 0%,100%{ transform: scaleY(.7); } 50%{ transform: scaleY(1); } }
-  .mt-bar{ animation: mtBarGrow 2.4s ease-in-out infinite; transform-box: fill-box; transform-origin: 50% 100%; }
-
-  @keyframes mtCoinBob{ 0%,100%{ transform: translateY(0); } 50%{ transform: translateY(-8px); } }
-  .mt-coin{ animation: mtCoinBob 3s ease-in-out infinite; transform-box: fill-box; transform-origin: 50% 50%; }
-
-  @keyframes mtGlowPulse{ 0%,100%{ opacity: .35; } 50%{ opacity: .7; } }
-  .mt-coin-glow{ animation: mtGlowPulse 2.4s ease-in-out infinite; }
-
-  @keyframes vdChipRise{ 0%{ transform: translateY(0); opacity: 0; } 20%{ opacity: .85; } 100%{ transform: translateY(-74px); opacity: 0; } }
-  .vd-chip{ animation: vdChipRise 3.4s ease-in infinite; transform-box: fill-box; transform-origin: 50% 50%; }
-
-  @keyframes vdIconPulse{ 0%,100%{ opacity: .4; transform: scale(1); } 50%{ opacity: .75; transform: scale(1.1); } }
-  .vd-icon-glow{ animation: vdIconPulse 2.6s ease-in-out infinite; transform-box: fill-box; transform-origin: 50% 50%; }
-
-  @keyframes vdProgress{ 0%{ transform: scaleX(0); } 60%{ transform: scaleX(1); } 100%{ transform: scaleX(0); } }
-  .vd-progress-fill{ animation: vdProgress 3s ease-in-out infinite; transform-box: fill-box; transform-origin: 0% 50%; }
-
-  @keyframes vdArrowBob{ 0%,100%{ transform: translateY(0); } 50%{ transform: translateY(6px); } }
-  .vd-arrow{ animation: vdArrowBob 2.2s ease-in-out infinite; transform-box: fill-box; transform-origin: 50% 50%; }
-
-  @media (prefers-reduced-motion: reduce){
-    .mt-orb, .mt-bar, .mt-coin, .mt-coin-glow, .vd-chip, .vd-icon-glow, .vd-progress-fill, .vd-arrow{ animation: none !important; }
-  }
-
-  /* ---------- timeline ---------- */
   .timeline{ margin-top: 8px; }
   .commit{
     display: grid;
@@ -595,7 +535,6 @@
     max-width: 58ch;
   }
 
-  /* ---------- contact ---------- */
   .api-block{
     background: var(--surface);
     border: 1px solid var(--line);
@@ -672,52 +611,23 @@
     border-radius: 4px;
   }
 
-  /* ---- calm ambient sound toggle ---- */
-  .ambient-toggle{
-    position: fixed;
-    right: 20px;
-    bottom: 20px;
-    z-index: 30;
-    width: 52px; height: 52px;
-    border-radius: 50%;
-    border: 1px solid var(--line-strong);
-    background: var(--surface);
-    color: var(--accent-2);
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 17px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    box-shadow: 0 12px 30px -10px rgba(0,0,0,0.65);
-    transition: transform .25s ease, border-color .25s ease, background .25s ease, color .25s ease;
-  }
-  .ambient-toggle:hover{ transform: translateY(-3px); border-color: var(--accent-2); }
-  .ambient-toggle.playing{
-    background: var(--accent-2);
-    border-color: var(--accent-2);
-    color: var(--ink);
-    animation: ambientPulse 2.6s ease-in-out infinite;
-  }
-  @keyframes ambientPulse{
-    0%,100%{ box-shadow: 0 0 0 0 rgba(110,231,200,0.45), 0 12px 30px -10px rgba(0,0,0,0.65); }
-    50%{ box-shadow: 0 0 0 14px rgba(110,231,200,0), 0 12px 30px -10px rgba(0,0,0,0.65); }
-  }
-  @media (prefers-reduced-motion: reduce){ .ambient-toggle.playing{ animation: none; } }
+  /* ============================================================
+     🧠 CHATBOT POPUP STYLES (added)
+     ============================================================ */
 
-  /* ===== CHATBOT POPUP STYLES (added) ===== */
+  /* --- Floating chat button --- */
   .chat-fab {
     position: fixed;
-    bottom: 88px;
-    right: 20px;
+    bottom: 28px;
+    right: 28px;
     z-index: 1000;
-    width: 56px;
-    height: 56px;
+    width: 60px;
+    height: 60px;
     border-radius: 50%;
     border: none;
     background: linear-gradient(145deg, #6c5ce7, #a29bfe);
     color: #fff;
-    font-size: 26px;
+    font-size: 28px;
     cursor: pointer;
     box-shadow: 0 8px 32px rgba(108, 92, 231, 0.45);
     transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1),
@@ -727,16 +637,25 @@
     justify-content: center;
     animation: fabPulse 3s ease-in-out infinite;
   }
-  .chat-fab:hover { transform: scale(1.08) translateY(-3px); box-shadow: 0 12px 44px rgba(108, 92, 231, 0.6); }
+
+  .chat-fab:hover {
+    transform: scale(1.08) translateY(-3px);
+    box-shadow: 0 12px 44px rgba(108, 92, 231, 0.6);
+  }
+
   .chat-fab:active { transform: scale(0.92); }
+
   @keyframes fabPulse {
     0%, 100% { box-shadow: 0 8px 32px rgba(108, 92, 231, 0.45); }
     50% { box-shadow: 0 8px 48px rgba(108, 92, 231, 0.7); }
   }
+
   .chat-fab .badge {
     position: absolute;
-    top: -4px; right: -4px;
-    width: 20px; height: 20px;
+    top: -4px;
+    right: -4px;
+    width: 20px;
+    height: 20px;
     border-radius: 50%;
     background: #e0776c;
     font-size: 10px;
@@ -749,6 +668,7 @@
     color: #fff;
   }
 
+  /* --- Chat window overlay --- */
   .chat-overlay {
     position: fixed;
     bottom: 100px;
@@ -758,7 +678,7 @@
     max-width: calc(100vw - 56px);
     height: 520px;
     max-height: calc(100vh - 140px);
-    background: rgba(20, 26, 36, 0.95);
+    background: #141a24;
     border-radius: 20px;
     border: 1px solid rgba(108, 92, 231, 0.2);
     box-shadow: 0 24px 80px rgba(0,0,0,0.7), 0 0 0 1px rgba(108, 92, 231, 0.08);
@@ -772,7 +692,9 @@
                 opacity 0.3s ease,
                 pointer-events 0s 0.35s;
     backdrop-filter: blur(12px);
+    background: rgba(20, 26, 36, 0.95);
   }
+
   .chat-overlay.open {
     transform: scale(1) translateY(0);
     opacity: 1;
@@ -782,6 +704,7 @@
                 pointer-events 0s 0s;
   }
 
+  /* --- Chat header --- */
   .chat-header {
     padding: 14px 18px;
     border-bottom: 1px solid rgba(255,255,255,0.06);
@@ -791,9 +714,16 @@
     flex-shrink: 0;
     background: rgba(0,0,0,0.2);
   }
-  .chat-header-left { display: flex; align-items: center; gap: 10px; }
+
+  .chat-header-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
   .chat-header-left .avatar {
-    width: 32px; height: 32px;
+    width: 32px;
+    height: 32px;
     border-radius: 50%;
     background: linear-gradient(145deg, #6c5ce7, #a29bfe);
     display: flex;
@@ -804,12 +734,14 @@
     color: #fff;
     font-family: 'JetBrains Mono', monospace;
   }
+
   .chat-header-left .title {
     font-family: 'Space Grotesk', sans-serif;
     font-weight: 600;
     font-size: 15px;
     color: var(--paper);
   }
+
   .chat-header-left .sub {
     font-family: 'JetBrains Mono', monospace;
     font-size: 10px;
@@ -817,6 +749,7 @@
     display: block;
     margin-top: -2px;
   }
+
   .chat-close {
     background: none;
     border: none;
@@ -827,8 +760,13 @@
     border-radius: 6px;
     transition: background 0.2s, color 0.2s;
   }
-  .chat-close:hover { background: rgba(255,255,255,0.06); color: var(--paper); }
 
+  .chat-close:hover {
+    background: rgba(255,255,255,0.06);
+    color: var(--paper);
+  }
+
+  /* --- Chat messages --- */
   .chat-messages {
     flex: 1;
     overflow-y: auto;
@@ -838,16 +776,24 @@
     gap: 10px;
     scroll-behavior: smooth;
   }
+
   .chat-messages::-webkit-scrollbar { width: 4px; }
   .chat-messages::-webkit-scrollbar-track { background: transparent; }
   .chat-messages::-webkit-scrollbar-thumb { background: #2a3344; border-radius: 4px; }
 
-  .msg { display: flex; gap: 8px; animation: msgSlide 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); }
+  .msg {
+    display: flex;
+    gap: 8px;
+    animation: msgSlide 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
   @keyframes msgSlide {
     from { opacity: 0; transform: translateY(10px) scale(0.96); }
     to { opacity: 1; transform: translateY(0) scale(1); }
   }
+
   .msg.user { justify-content: flex-end; }
+
   .msg .bubble {
     max-width: 80%;
     padding: 10px 14px;
@@ -857,22 +803,26 @@
     word-wrap: break-word;
     white-space: pre-wrap;
   }
+
   .msg.bot .bubble {
     background: rgba(255,255,255,0.06);
     border: 1px solid rgba(255,255,255,0.06);
     border-top-left-radius: 4px;
     color: var(--paper);
   }
+
   .msg.user .bubble {
     background: #6c5ce7;
     color: #fff;
     border-top-right-radius: 4px;
   }
+
   .msg .bubble.error {
     background: rgba(224,119,108,0.12);
     border-color: rgba(224,119,108,0.3);
     color: #f2b9b2;
   }
+
   .msg .bubble code {
     font-family: 'JetBrains Mono', monospace;
     font-size: 12px;
@@ -880,6 +830,7 @@
     padding: 1px 5px;
     border-radius: 4px;
   }
+
   .msg .bubble pre {
     font-family: 'JetBrains Mono', monospace;
     font-size: 11.5px;
@@ -889,11 +840,22 @@
     overflow-x: auto;
     margin: 4px 0;
   }
+
   .msg .bubble pre code { background: none; padding: 0; }
   .msg .bubble strong { color: #fff; }
   .msg .bubble ul, .msg .bubble ol { margin: 4px 0 6px; padding-left: 18px; }
   .msg .bubble li::marker { color: #a29bfe; }
 
+  .msg-meta {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    color: var(--text-faint);
+    opacity: 0.5;
+    padding: 0 4px;
+    margin-top: 2px;
+  }
+
+  /* --- Typing indicator --- */
   .typing-dots {
     display: flex;
     gap: 4px;
@@ -903,19 +865,24 @@
     border-top-left-radius: 4px;
     width: fit-content;
   }
+
   .typing-dots span {
-    width: 6px; height: 6px;
+    width: 6px;
+    height: 6px;
     border-radius: 50%;
     background: var(--muted);
     animation: dotBounce 1.2s ease-in-out infinite;
   }
+
   .typing-dots span:nth-child(2) { animation-delay: 0.15s; }
   .typing-dots span:nth-child(3) { animation-delay: 0.3s; }
+
   @keyframes dotBounce {
     0%, 60%, 100% { transform: translateY(0); opacity: 0.3; }
     30% { transform: translateY(-6px); opacity: 1; }
   }
 
+  /* --- Chat footer (credit) --- */
   .chat-footer {
     padding: 8px 18px;
     border-top: 1px solid rgba(255,255,255,0.04);
@@ -926,8 +893,10 @@
     flex-shrink: 0;
     background: rgba(0,0,0,0.15);
   }
+
   .chat-footer span { color: #a29bfe; font-weight: 600; }
 
+  /* --- Chat input --- */
   .chat-input-area {
     padding: 10px 14px 14px;
     border-top: 1px solid rgba(255,255,255,0.06);
@@ -936,6 +905,7 @@
     flex-shrink: 0;
     background: rgba(0,0,0,0.1);
   }
+
   .chat-input-area input {
     flex: 1;
     background: rgba(255,255,255,0.05);
@@ -948,10 +918,13 @@
     outline: none;
     transition: border-color 0.2s;
   }
+
   .chat-input-area input::placeholder { color: var(--muted); }
   .chat-input-area input:focus { border-color: #a29bfe; }
+
   .chat-input-area .send-btn {
-    width: 44px; height: 44px;
+    width: 44px;
+    height: 44px;
     border-radius: 12px;
     border: none;
     background: linear-gradient(145deg, #6c5ce7, #a29bfe);
@@ -966,10 +939,20 @@
     flex-shrink: 0;
     box-shadow: 0 4px 16px rgba(108, 92, 231, 0.25);
   }
-  .chat-input-area .send-btn:hover:not(:disabled) { transform: scale(1.05); box-shadow: 0 6px 28px rgba(108, 92, 231, 0.4); }
-  .chat-input-area .send-btn:active:not(:disabled) { transform: scale(0.92); }
-  .chat-input-area .send-btn:disabled { opacity: 0.4; cursor: not-allowed; box-shadow: none; }
 
+  .chat-input-area .send-btn:hover:not(:disabled) {
+    transform: scale(1.05);
+    box-shadow: 0 6px 28px rgba(108, 92, 231, 0.4);
+  }
+
+  .chat-input-area .send-btn:active:not(:disabled) { transform: scale(0.92); }
+  .chat-input-area .send-btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    box-shadow: none;
+  }
+
+  /* --- Responsive --- */
   @media (max-width: 480px) {
     .chat-overlay {
       bottom: 80px;
@@ -978,7 +961,13 @@
       height: calc(100vh - 120px);
       border-radius: 16px;
     }
-    .chat-fab { bottom: 16px; right: 16px; width: 54px; height: 54px; font-size: 24px; }
+    .chat-fab {
+      bottom: 16px;
+      right: 16px;
+      width: 54px;
+      height: 54px;
+      font-size: 24px;
+    }
   }
 </style>
 </head>
@@ -1092,6 +1081,7 @@
     <p class="eyebrow reveal"><span class="slash">//</span> selected work</p>
     <div class="project-list">
 
+      <!-- Eclipse Blitz -->
       <div class="project has-thumb reveal">
         <a class="project-thumb" href="eclipse-blitz.html" target="_blank" rel="noopener" aria-label="Play Eclipse Blitz">
           <svg viewBox="0 0 800 300" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
@@ -1112,11 +1102,8 @@
                 <feGaussianBlur stdDeviation="7"/>
               </filter>
             </defs>
-
             <rect width="800" height="300" fill="url(#ebBg)"/>
             <rect width="800" height="300" fill="url(#ebGlow)"/>
-
-            <!-- stars -->
             <g class="eb-stars" fill="#ffffff">
               <circle cx="36" cy="38" r="1.4" opacity="0.8" style="animation-delay:.1s"/>
               <circle cx="120" cy="90" r="1" opacity="0.6" style="animation-delay:.6s"/>
@@ -1129,15 +1116,11 @@
               <circle cx="750" cy="60" r="1" opacity="0.6" style="animation-delay:.5s"/>
               <circle cx="640" cy="250" r="1.3" opacity="0.8" style="animation-delay:1s"/>
             </g>
-
-            <!-- speed streaks -->
             <g stroke="#ffe14b" stroke-width="2" stroke-linecap="round">
               <line class="eb-streak" x1="0" y1="95" x2="130" y2="95" style="animation-delay:0s"/>
               <line class="eb-streak" x1="0" y1="150" x2="150" y2="150" style="animation-delay:1s"/>
               <line class="eb-streak" x1="0" y1="205" x2="120" y2="205" style="animation-delay:2s"/>
             </g>
-
-            <!-- enemies -->
             <g class="eb-enemies">
               <polygon points="648,80 666,98 648,116 630,98" fill="#ff3b5c" filter="url(#ebBlur)" opacity="0.55"/>
               <polygon points="648,80 666,98 648,116 630,98" fill="#ff3b5c"/>
@@ -1146,14 +1129,10 @@
               <polygon points="600,205 615,220 600,235 585,220" fill="#ff3b5c" filter="url(#ebBlur)" opacity="0.5"/>
               <polygon points="600,205 615,220 600,235 585,220" fill="#ff3b5c"/>
             </g>
-
-            <!-- player ship -->
             <g class="eb-ship">
               <ellipse cx="98" cy="150" rx="16" ry="6" fill="#4bf5ff" opacity="0.55" filter="url(#ebBlur)"/>
               <polygon points="158,150 118,178 128,150 118,122" fill="url(#ebShip)"/>
             </g>
-
-            <!-- title -->
             <text x="404" y="176" text-anchor="middle" font-family="Orbitron, sans-serif" font-weight="900" font-size="44" fill="#ff3b5c" opacity="0.55" filter="url(#ebBlur)">ECLIPSE BLITZ</text>
             <text x="400" y="172" text-anchor="middle" font-family="Orbitron, sans-serif" font-weight="900" font-size="44" fill="#ffffff" letter-spacing="2">ECLIPSE BLITZ</text>
             <text x="400" y="198" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-weight="500" font-size="13" fill="#c8b8ff" letter-spacing="3" opacity="0.85">ARCADE SPACE SHOOTER</text>
@@ -1161,7 +1140,6 @@
           <span class="thumb-tag">GAME</span>
           <span class="play-pill"><span class="play-tri"></span>Play now</span>
         </a>
-
         <div class="project-body-pad">
           <div class="project-head">
             <div class="project-sig"><span class="fn">function</span> <span class="name">EclipseBlitz</span><span class="punct">()</span></div>
@@ -1172,6 +1150,7 @@
         </div>
       </div>
 
+      <!-- Money Tracker -->
       <div class="project has-thumb reveal">
         <a class="project-thumb" href="money-tracker.html" target="_blank" rel="noopener" aria-label="Open Money Tracker">
           <svg viewBox="0 0 800 300" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
@@ -1192,18 +1171,13 @@
                 <feGaussianBlur stdDeviation="10"/>
               </filter>
             </defs>
-
             <rect width="800" height="300" fill="url(#mtBg)"/>
             <rect width="800" height="300" fill="url(#mtGlow)"/>
-
-            <!-- ambient orbs -->
             <g>
               <circle class="mt-orb" cx="120" cy="60" r="60" fill="#ff6b6b" opacity="0.18" filter="url(#mtBlur)" style="animation-delay:0s"/>
               <circle class="mt-orb" cx="700" cy="70" r="70" fill="#4ecdc4" opacity="0.16" filter="url(#mtBlur)" style="animation-delay:.8s"/>
               <circle class="mt-orb" cx="600" cy="250" r="55" fill="#ffe66d" opacity="0.14" filter="url(#mtBlur)" style="animation-delay:1.4s"/>
             </g>
-
-            <!-- chart bars -->
             <g>
               <rect class="mt-bar" x="512" y="200" width="26" height="70" rx="4" fill="#6fcf97" style="animation-delay:0s"/>
               <rect class="mt-bar" x="550" y="175" width="26" height="95" rx="4" fill="#f28b82" style="animation-delay:.3s"/>
@@ -1211,15 +1185,11 @@
               <rect class="mt-bar" x="626" y="190" width="26" height="80" rx="4" fill="#f28b82" style="animation-delay:.9s"/>
               <rect class="mt-bar" x="664" y="165" width="26" height="105" rx="4" fill="#6fcf97" style="animation-delay:1.2s"/>
             </g>
-
-            <!-- coin -->
             <g class="mt-coin">
               <circle class="mt-coin-glow" cx="150" cy="205" r="46" fill="#bb86fc" filter="url(#mtBlur)"/>
               <circle cx="150" cy="205" r="30" fill="url(#mtCoinGrad)"/>
               <text x="150" y="215" text-anchor="middle" font-family="Orbitron, sans-serif" font-weight="800" font-size="26" fill="#3a2a00">$</text>
             </g>
-
-            <!-- title -->
             <text x="404" y="78" text-anchor="middle" font-family="Orbitron, sans-serif" font-weight="900" font-size="38" fill="#bb86fc" opacity="0.55" filter="url(#mtBlur)">MONEY TRACKER</text>
             <text x="400" y="74" text-anchor="middle" font-family="Orbitron, sans-serif" font-weight="900" font-size="38" fill="#ffffff" letter-spacing="1.5">MONEY TRACKER</text>
             <text x="400" y="100" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-weight="500" font-size="12.5" fill="#6fcf97" letter-spacing="3" opacity="0.9">PERSONAL FINANCE APP</text>
@@ -1227,7 +1197,6 @@
           <span class="thumb-tag">APP</span>
           <span class="play-pill"><span class="play-tri"></span>Open now</span>
         </a>
-
         <div class="project-body-pad">
           <div class="project-head">
             <div class="project-sig"><span class="fn">function</span> <span class="name">MoneyTracker</span><span class="punct">()</span></div>
@@ -1238,6 +1207,7 @@
         </div>
       </div>
 
+      <!-- Video Downloader -->
       <div class="project has-thumb reveal">
         <a class="project-thumb" href="video-downloader.html" target="_blank" rel="noopener" aria-label="Open Video Downloader">
           <svg viewBox="0 0 800 300" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
@@ -1263,20 +1233,15 @@
                 <feGaussianBlur stdDeviation="9"/>
               </filter>
             </defs>
-
             <rect width="800" height="300" fill="url(#vdBg)"/>
             <rect width="800" height="300" fill="url(#vdGlowL)"/>
             <rect width="800" height="300" fill="url(#vdGlowR)"/>
-
-            <!-- rising file chips -->
             <g fill="url(#vdIconGrad)">
               <rect class="vd-chip" x="230" y="230" width="26" height="18" rx="4" opacity="0.8" style="animation-delay:0s"/>
               <rect class="vd-chip" x="560" y="235" width="26" height="18" rx="4" opacity="0.8" style="animation-delay:1s"/>
               <rect class="vd-chip" x="300" y="220" width="20" height="14" rx="3" opacity="0.7" style="animation-delay:2s"/>
               <rect class="vd-chip" x="500" y="215" width="20" height="14" rx="3" opacity="0.7" style="animation-delay:2.6s"/>
             </g>
-
-            <!-- download icon -->
             <g>
               <circle class="vd-icon-glow" cx="400" cy="140" r="58" fill="#7c5cfc" filter="url(#vdBlur)"/>
               <g class="vd-arrow" stroke="url(#vdIconGrad)" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" fill="none">
@@ -1285,12 +1250,8 @@
                 <line x1="366" y1="178" x2="434" y2="178"/>
               </g>
             </g>
-
-            <!-- progress bar -->
             <rect x="270" y="228" width="260" height="10" rx="5" fill="rgba(255,255,255,0.08)"/>
             <rect class="vd-progress-fill" x="270" y="228" width="260" height="10" rx="5" fill="url(#vdIconGrad)"/>
-
-            <!-- title -->
             <text x="404" y="70" text-anchor="middle" font-family="Orbitron, sans-serif" font-weight="900" font-size="36" fill="#7c5cfc" opacity="0.5" filter="url(#vdBlur)">SNAPSAVE</text>
             <text x="400" y="66" text-anchor="middle" font-family="Orbitron, sans-serif" font-weight="900" font-size="36" fill="#ffffff" letter-spacing="2">SNAPSAVE</text>
             <text x="400" y="266" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-weight="500" font-size="12.5" fill="#5c9cfc" letter-spacing="3" opacity="0.9">VIDEO &amp; AUDIO DOWNLOADER</text>
@@ -1298,7 +1259,6 @@
           <span class="thumb-tag">APP</span>
           <span class="play-pill"><span class="play-tri"></span>Open now</span>
         </a>
-
         <div class="project-body-pad">
           <div class="project-head">
             <div class="project-sig"><span class="fn">function</span> <span class="name">VideoDownloader</span><span class="punct">()</span></div>
@@ -1345,18 +1305,19 @@
 
 </div>
 
-<!-- Ambient toggle -->
-<button class="ambient-toggle" id="ambientToggle" type="button" title="Play calm ambient sound" aria-label="Play calm ambient sound" aria-pressed="false">
-  <span id="ambientIcon">♪</span>
-</button>
+<!-- ============================================================
+     🧠 CHATBOT POPUP — HTML
+     ============================================================ -->
 
-<!-- ===== CHATBOT POPUP – HTML ===== -->
+<!-- Floating button -->
 <button class="chat-fab" id="chatFab" aria-label="Open AI Chatbot" title="Chat with AI">
   💬
   <span class="badge">AI</span>
 </button>
 
+<!-- Chat overlay -->
 <div class="chat-overlay" id="chatOverlay">
+  <!-- Header -->
   <div class="chat-header">
     <div class="chat-header-left">
       <div class="avatar">L</div>
@@ -1367,12 +1328,18 @@
     </div>
     <button class="chat-close" id="chatClose" aria-label="Close chat">✕</button>
   </div>
+
+  <!-- Messages -->
   <div class="chat-messages" id="chatMessages">
-    <!-- Greeting injected by JS -->
+    <!-- Greeting will be injected by JS -->
   </div>
+
+  <!-- Footer credit -->
   <div class="chat-footer">
     🤖 This chatbot is totally developed by <span>Zayed</span>
   </div>
+
+  <!-- Input -->
   <div class="chat-input-area">
     <input type="text" id="chatInput" placeholder="Ask me anything… (Enter to send)" maxlength="4000" autocomplete="off">
     <button class="send-btn" id="chatSendBtn" aria-label="Send message">➤</button>
@@ -1381,456 +1348,366 @@
 
 <script>
   // ============================================================
-  //  ALL SCRIPTS WRAPPED IN DOMContentLoaded + error handling
+  //  ORIGINAL PORTFOLIO SCRIPTS
   // ============================================================
 
-  document.addEventListener('DOMContentLoaded', function() {
+  // year
+  document.getElementById('year').textContent = new Date().getFullYear();
 
-    // ---- year ----
-    document.getElementById('year').textContent = new Date().getFullYear();
+  // gutter line numbers
+  (function(){
+    const gutter = document.getElementById('gutterInner');
+    const lineHeight = 28;
+    function fill(){
+      const total = Math.ceil(document.body.scrollHeight / lineHeight) + 20;
+      let html = '';
+      for(let i=1;i<=total;i++){ html += i + '<br>'; }
+      gutter.innerHTML = html;
+    }
+    fill();
+    window.addEventListener('resize', fill);
+  })();
 
-    // ---- gutter line numbers ----
-    (function(){
-      const gutter = document.getElementById('gutterInner');
-      if (!gutter) return;
-      const lineHeight = 28;
-      function fill(){
-        const total = Math.ceil(document.body.scrollHeight / lineHeight) + 20;
-        let html = '';
-        for(let i=1;i<=total;i++){ html += i + '<br>'; }
-        gutter.innerHTML = html;
+  // terminal typing effect
+  (function(){
+    const el = document.getElementById('typedLine');
+    const output = document.getElementById('heroOutput');
+    const text = "developer, based on the internet.";
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if(reduced){
+      el.textContent = text;
+      output.classList.add('show');
+      return;
+    }
+    let i = 0;
+    el.innerHTML = '<span class="cursor"></span>';
+    function type(){
+      if(i <= text.length){
+        el.innerHTML = text.slice(0, i) + '<span class="cursor"></span>';
+        i++;
+        setTimeout(type, 32);
+      } else {
+        setTimeout(() => output.classList.add('show'), 200);
       }
-      fill();
-      window.addEventListener('resize', fill);
-    })();
+    }
+    setTimeout(type, 400);
+  })();
 
-    // ---- terminal typing effect ----
-    (function(){
-      const el = document.getElementById('typedLine');
-      const output = document.getElementById('heroOutput');
-      if (!el || !output) return;
-      const text = "developer, based on the internet.";
-      const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      if(reduced){
-        el.textContent = text;
-        output.classList.add('show');
-        return;
-      }
-      let i = 0;
-      el.innerHTML = '<span class="cursor"></span>';
-      function type(){
-        if(i <= text.length){
-          el.innerHTML = text.slice(0, i) + '<span class="cursor"></span>';
-          i++;
-          setTimeout(type, 32);
-        } else {
-          setTimeout(() => output.classList.add('show'), 200);
+  // scroll reveal
+  (function(){
+    const items = document.querySelectorAll('.reveal');
+    const io = new IntersectionObserver((entries)=>{
+      entries.forEach(e=>{
+        if(e.isIntersecting){
+          e.target.classList.add('in-view');
+          io.unobserve(e.target);
         }
-      }
-      setTimeout(type, 400);
-    })();
-
-    // ---- scroll reveal ----
-    (function(){
-      const items = document.querySelectorAll('.reveal');
-      if (!items.length) return;
-      const io = new IntersectionObserver((entries)=>{
-        entries.forEach(e=>{
-          if(e.isIntersecting){
-            e.target.classList.add('in-view');
-            io.unobserve(e.target);
-          }
-        });
-      }, { threshold: 0.15 });
-      items.forEach(it=>io.observe(it));
-    })();
-
-    // ---- nav smooth scroll ----
-    document.querySelectorAll('.navline button').forEach(btn=>{
-      btn.addEventListener('click', ()=>{
-        const target = document.getElementById(btn.dataset.target);
-        if(target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
       });
+    }, { threshold: 0.15 });
+    items.forEach(it=>io.observe(it));
+  })();
+
+  // nav smooth scroll
+  document.querySelectorAll('.navline button').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      const target = document.getElementById(btn.dataset.target);
+      if(target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
     });
+  });
 
-    // ---- calm ambient soundscape (unchanged) ----
-    (function(){
-      const btn = document.getElementById('ambientToggle');
-      const icon = document.getElementById('ambientIcon');
-      if (!btn || !icon) return;
-      let ctx = null;
-      let master = null;
-      let nodes = [];
-      let playing = false;
-
-      function buildGraph(){
-        master = ctx.createGain();
-        master.gain.value = 0;
-        master.connect(ctx.destination);
-        master.gain.linearRampToValueAtTime(0.045, ctx.currentTime + 3);
-
-        const filter = ctx.createBiquadFilter();
-        filter.type = 'lowpass';
-        filter.frequency.value = 1100;
-        filter.Q.value = 0.6;
-        filter.connect(master);
-
-        const notes = [130.81, 196.00, 261.63, 329.63];
-        notes.forEach((f, i) => {
-          [-4, 4].forEach(detune => {
-            const osc = ctx.createOscillator();
-            osc.type = 'triangle';
-            osc.frequency.value = f;
-            osc.detune.value = detune;
-            const g = ctx.createGain();
-            g.gain.value = 0.26 / (i + 1);
-            osc.connect(g);
-            g.connect(filter);
-            osc.start();
-            nodes.push(osc, g);
-          });
-        });
-
-        const bufferSize = 2 * ctx.sampleRate;
-        const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
-        const data = buffer.getChannelData(0);
-        for(let i = 0; i < bufferSize; i++){ data[i] = (Math.random() * 2 - 1) * 0.6; }
-        const noise = ctx.createBufferSource();
-        noise.buffer = buffer;
-        noise.loop = true;
-        const noiseFilter = ctx.createBiquadFilter();
-        noiseFilter.type = 'lowpass';
-        noiseFilter.frequency.value = 480;
-        const noiseGain = ctx.createGain();
-        noiseGain.gain.value = 0.02;
-        noise.connect(noiseFilter);
-        noiseFilter.connect(noiseGain);
-        noiseGain.connect(master);
-        noise.start();
-        nodes.push(noise, noiseFilter, noiseGain);
-
-        const lfo = ctx.createOscillator();
-        lfo.frequency.value = 0.035;
-        const lfoGain = ctx.createGain();
-        lfoGain.gain.value = 220;
-        lfo.connect(lfoGain);
-        lfoGain.connect(filter.frequency);
-        lfo.start();
-        nodes.push(lfo, lfoGain);
-      }
-
-      function teardown(){
-        if(!ctx) return;
-        const now = ctx.currentTime;
-        if(master) master.gain.linearRampToValueAtTime(0, now + 1.2);
-        const old = nodes;
-        nodes = [];
-        setTimeout(() => {
-          old.forEach(n => {
-            try{ n.stop && n.stop(); }catch(e){}
-            try{ n.disconnect(); }catch(e){}
-          });
-          if(master){ master.disconnect(); master = null; }
-        }, 1300);
-      }
-
-      function setUI(isPlaying){
-        playing = isPlaying;
-        btn.classList.toggle('playing', isPlaying);
-        icon.textContent = isPlaying ? '❙❙' : '♪';
-        btn.title = isPlaying ? 'Pause calm ambient sound' : 'Play calm ambient sound';
-        btn.setAttribute('aria-label', btn.title);
-        btn.setAttribute('aria-pressed', String(isPlaying));
-      }
-
-      function play(){
-        ctx = ctx || new (window.AudioContext || window.webkitAudioContext)();
-        buildGraph();
-        ctx.resume().catch(() => {});
-        setUI(true);
-      }
-
-      function pause(){
-        teardown();
-        setUI(false);
-      }
-
-      btn.addEventListener('click', () => { playing ? pause() : play(); });
-
-      // play by default (will resume on gesture)
-      play();
-      const resumeOnGesture = () => {
-        if(ctx && ctx.state !== 'running'){ ctx.resume().catch(() => {}); }
-      };
-      ['click', 'keydown', 'touchstart'].forEach(evt =>
-        document.addEventListener(evt, resumeOnGesture, { once: true })
-      );
-    })();
-
-  }); // end DOMContentLoaded
-
-
+  
   // ============================================================
-  //  CHATBOT LOGIC – wrapped in try/catch so it never breaks the page
-  //  (runs immediately after DOM is ready, but isolated)
+  //  🧠 CHATBOT LOGIC — powered by Groq (https://console.groq.com)
+  //  Free, no credit card, runs open-source models (Llama 3.3 etc.)
+  //  at very high speed. Get a free key at console.groq.com/keys
+  //  and paste it below. NOTE: since this is a static site with no
+  //  backend, this key is visible to anyone who views the page
+  //  source. That's fine on Groq's free tier (no billing attached,
+  //  regenerate anytime) — just don't reuse this key anywhere that
+  //  matters more.
   // ============================================================
 
   (function(){
-    try {
-      // Wait a tiny bit to ensure DOM is fully ready (but we already have DOMContentLoaded for others)
-      // We'll use a small timeout to let the main scripts run first.
-      setTimeout(function() {
-        const API_BASE = 'http://localhost:3000';
-        const fab = document.getElementById('chatFab');
-        const overlay = document.getElementById('chatOverlay');
-        const closeBtn = document.getElementById('chatClose');
-        const messagesEl = document.getElementById('chatMessages');
-        const inputEl = document.getElementById('chatInput');
-        const sendBtn = document.getElementById('chatSendBtn');
+    const GROQ_API_KEY = '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';
+    const GROQ_MODEL = 'llama-3.3-70b-versatile'; // open-source, fast, free tier
 
-        if (!fab || !overlay || !closeBtn || !messagesEl || !inputEl || !sendBtn) {
-          console.warn('Chat elements missing – skipping chatbot.');
-          return;
-        }
+    const SYSTEM_PROMPT = `You are Zayed's AI assistant, embedded on his personal portfolio site.
+Speak naturally and concisely, and answer as someone who genuinely knows Zayed's work.
 
-        let isOpen = false;
-        let isBusy = false;
-        let history = [];
+About Zayed:
+- A software developer who turns ambiguous ideas into working software.
+- Cares about readable code, fast interfaces, and products that respect the people using them.
+- 3+ years building, 20+ projects shipped.
 
-        function openChat(){
-          isOpen = true;
-          overlay.classList.add('open');
-          if(messagesEl.children.length === 0){
-            addGreeting();
-          }
-          inputEl.focus();
-        }
+Skills:
+- Frontend: JavaScript, TypeScript, React, Next.js, Tailwind CSS, HTML/CSS
+- Backend: Node.js, Express, Python, REST APIs, PostgreSQL, MongoDB
+- Tools: Git, Docker, Figma, Linux, CI/CD
 
-        function closeChat(){
-          isOpen = false;
-          overlay.classList.remove('open');
-        }
+Selected projects:
+- Eclipse Blitz — a neon arcade space shooter built with the Canvas API, full HUD, on-screen controls, and online co-op multiplayer.
+- Money Tracker — a personal finance tracker for logging transactions and watching balances update instantly, built with JavaScript and LocalStorage.
+- Video Downloader — a clean, glassmorphic tool for pasting a link, picking a format, and downloading the file.
 
-        fab.addEventListener('click', openChat);
-        closeBtn.addEventListener('click', closeChat);
+If asked something outside of this context, just answer helpfully like a normal knowledgeable assistant — you don't have to only talk about Zayed.`;
 
-        document.addEventListener('keydown', (e) => {
-          if(e.key === 'Escape' && isOpen) closeChat();
-        });
+    const fab = document.getElementById('chatFab');
+    const overlay = document.getElementById('chatOverlay');
+    const closeBtn = document.getElementById('chatClose');
+    const messagesEl = document.getElementById('chatMessages');
+    const inputEl = document.getElementById('chatInput');
+    const sendBtn = document.getElementById('chatSendBtn');
 
-        function addGreeting(){
-          const msg = document.createElement('div');
-          msg.className = 'msg bot';
-          msg.innerHTML = `
-            <div class="bubble">
-              👋 Hi! I'm Zayed's AI assistant. Ask me anything about his work, projects, or just chat.
-            </div>
-          `;
-          messagesEl.appendChild(msg);
-          scrollToBottom();
-        }
+    let isOpen = false;
+    let isBusy = false;
+    let history = [];
 
-        function renderMessage(role, content, isError = false){
-          const msg = document.createElement('div');
-          msg.className = `msg ${role}`;
-          const bubble = document.createElement('div');
-          bubble.className = 'bubble' + (isError ? ' error' : '');
-          bubble.innerHTML = role === 'user' ? escapeHtml(content) : renderMarkdown(content);
-          msg.appendChild(bubble);
-          messagesEl.appendChild(msg);
-          scrollToBottom();
-          return msg;
-        }
-
-        function renderTyping(){
-          const msg = document.createElement('div');
-          msg.className = 'msg bot';
-          msg.id = 'typingIndicator';
-          msg.innerHTML = `
-            <div class="typing-dots">
-              <span></span><span></span><span></span>
-            </div>
-          `;
-          messagesEl.appendChild(msg);
-          scrollToBottom();
-          return msg;
-        }
-
-        function removeTyping(){
-          const el = document.getElementById('typingIndicator');
-          if(el) el.remove();
-        }
-
-        function scrollToBottom(){
-          requestAnimationFrame(() => {
-            messagesEl.scrollTop = messagesEl.scrollHeight;
-          });
-        }
-
-        function escapeHtml(str){
-          const div = document.createElement('div');
-          div.textContent = str;
-          return div.innerHTML;
-        }
-
-        function renderMarkdown(raw){
-          let text = escapeHtml(raw);
-          text = text.replace(/```([\s\S]*?)```/g, (_, code) => `<pre><code>${code.trim()}</code></pre>`);
-          text = text.replace(/`([^`\n]+)`/g, '<code>$1</code>');
-          text = text.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
-          text = text.replace(/(^|[^*])\*([^*\n]+)\*(?!\*)/g, '$1<em>$2</em>');
-          text = text.replace(/\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g,
-            '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>');
-          const lines = text.split('\n');
-          let html = '', inList = false, listType = 'ul';
-          for (let line of lines){
-            const trimmed = line.trim();
-            const ordered = /^\d+\.\s+(.*)/.exec(trimmed);
-            const unordered = /^[-*]\s+(.*)/.exec(trimmed);
-            if(ordered){
-              if(!inList || listType !== 'ol'){ if(inList) html += `</${listType}>`; html += '<ol>'; listType = 'ol'; inList = true; }
-              html += `<li>${ordered[1]}</li>`;
-            } else if(unordered){
-              if(!inList || listType !== 'ul'){ if(inList) html += `</${listType}>`; html += '<ul>'; listType = 'ul'; inList = true; }
-              html += `<li>${unordered[1]}</li>`;
-            } else {
-              if(inList){ html += `</${listType}>`; inList = false; }
-              if(trimmed === '') continue;
-              html += `<p>${line}</p>`;
-            }
-          }
-          if(inList) html += `</${listType}>`;
-          return html || '<p></p>';
-        }
-
-        function friendlyError(err){
-          const msg = (err && err.message) || String(err);
-          if(/Failed to fetch|NetworkError/i.test(msg)){
-            return `⚠️ Couldn't reach the AI server. Make sure the proxy is running: <code>node server.js</code>`;
-          }
-          if(/model.*not found|404/i.test(msg)){
-            return `⚠️ Model isn't available. Run: <code>ollama pull phi3:mini</code>`;
-          }
-          return `⚠️ Something went wrong: ${escapeHtml(msg)}`;
-        }
-
-        async function sendMessage(){
-          const text = inputEl.value.trim();
-          if(!text || isBusy) return;
-
-          renderMessage('user', text);
-          history.push({ role: 'user', content: text });
-          inputEl.value = '';
-          inputEl.style.height = 'auto';
-          isBusy = true;
-          sendBtn.disabled = true;
-
-          const typing = renderTyping();
-
-          try {
-            const payload = {
-              model: 'llama3-8b-8192',
-              messages: [
-                { role: 'system', content: 'You are a helpful assistant. You are knowledgeable about software development, design, and Zayed\'s portfolio. Be concise and direct.' },
-                ...history
-              ],
-              stream: true,
-              temperature: 0.7,
-              max_tokens: 800
-            };
-
-            const res = await fetch(`${API_BASE}/api/chat/stream`, {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify(payload)
-            });
-
-            if(!res.ok){
-              let detail = '';
-              try{ detail = (await res.json()).error?.message || ''; }catch(e){}
-              throw new Error(`${res.status}${detail ? ': ' + detail : ''}`);
-            }
-            if(!res.body) throw new Error('Streaming not supported');
-
-            removeTyping();
-
-            let fullText = '';
-            const botMsg = renderMessage('bot', '');
-            const bubble = botMsg.querySelector('.bubble');
-            bubble.classList.add('cursor-blink');
-
-            const reader = res.body.getReader();
-            const decoder = new TextDecoder();
-            let buffer = '';
-
-            while(true){
-              const { value, done } = await reader.read();
-              if(done) break;
-              buffer += decoder.decode(value, { stream: true });
-
-              const lines = buffer.split('\n');
-              buffer = lines.pop();
-
-              for(const line of lines){
-                const trimmed = line.trim();
-                if(!trimmed.startsWith('data:')) continue;
-                const payload = trimmed.slice(5).trim();
-                if(payload === '[DONE]') continue;
-                try{
-                  const json = JSON.parse(payload);
-                  const delta = json.choices?.[0]?.delta?.content || json.choices?.[0]?.message?.content || '';
-                  if(delta){
-                    fullText += delta;
-                    bubble.innerHTML = renderMarkdown(fullText);
-                    scrollToBottom();
-                  }
-                }catch(e){ /* ignore */ }
-              }
-            }
-
-            bubble.classList.remove('cursor-blink');
-            if(!fullText) fullText = '(no response)';
-            bubble.innerHTML = renderMarkdown(fullText);
-            history.push({ role: 'assistant', content: fullText });
-
-          } catch(err){
-            removeTyping();
-            renderMessage('bot', friendlyError(err), true);
-          } finally {
-            isBusy = false;
-            sendBtn.disabled = false;
-            inputEl.focus();
-            scrollToBottom();
-          }
-        }
-
-        inputEl.addEventListener('keydown', (e) => {
-          if(e.key === 'Enter' && !e.shiftKey){
-            e.preventDefault();
-            sendMessage();
-          }
-        });
-
-        sendBtn.addEventListener('click', sendMessage);
-
-        inputEl.addEventListener('input', () => {
-          inputEl.style.height = 'auto';
-          inputEl.style.height = Math.min(inputEl.scrollHeight, 80) + 'px';
-        });
-
-        // auto‑open after a short delay
-        setTimeout(() => {
-          if(!isOpen && messagesEl.children.length === 0){
-            openChat();
-          }
-        }, 1200);
-
-      }, 100); // small delay to let the main page scripts settle
-    } catch(e) {
-      console.warn('Chatbot setup failed – animations still work:', e);
+    // ----- Open/Close -----
+    function openChat(){
+      isOpen = true;
+      overlay.classList.add('open');
+      if(messagesEl.children.length === 0){
+        addGreeting();
+      }
+      inputEl.focus();
     }
-  })();
-</script>
 
+    function closeChat(){
+      isOpen = false;
+      overlay.classList.remove('open');
+    }
+
+    fab.addEventListener('click', openChat);
+    closeBtn.addEventListener('click', closeChat);
+
+    document.addEventListener('keydown', (e) => {
+      if(e.key === 'Escape' && isOpen) closeChat();
+    });
+
+    // ----- Greeting -----
+    function addGreeting(){
+      const msg = document.createElement('div');
+      msg.className = 'msg bot';
+      msg.innerHTML = `
+        <div class="bubble">
+          👋 Hi! I'm Zayed's AI assistant. Ask me anything about his work, projects, or just chat.
+        </div>
+      `;
+      messagesEl.appendChild(msg);
+      scrollToBottom();
+    }
+
+    // ----- Render message -----
+    function renderMessage(role, content, isError = false){
+      const msg = document.createElement('div');
+      msg.className = `msg ${role}`;
+      const bubble = document.createElement('div');
+      bubble.className = 'bubble' + (isError ? ' error' : '');
+      bubble.innerHTML = role === 'user' ? escapeHtml(content) : renderMarkdown(content);
+      msg.appendChild(bubble);
+      messagesEl.appendChild(msg);
+      scrollToBottom();
+      return msg;
+    }
+
+    function renderTyping(){
+      const msg = document.createElement('div');
+      msg.className = 'msg bot';
+      msg.id = 'typingIndicator';
+      msg.innerHTML = `
+        <div class="typing-dots">
+          <span></span><span></span><span></span>
+        </div>
+      `;
+      messagesEl.appendChild(msg);
+      scrollToBottom();
+      return msg;
+    }
+
+    function removeTyping(){
+      const el = document.getElementById('typingIndicator');
+      if(el) el.remove();
+    }
+
+    function scrollToBottom(){
+      requestAnimationFrame(() => {
+        messagesEl.scrollTop = messagesEl.scrollHeight;
+      });
+    }
+
+    // ----- Helpers -----
+    function escapeHtml(str){
+      const div = document.createElement('div');
+      div.textContent = str;
+      return div.innerHTML;
+    }
+
+    function renderMarkdown(raw){
+      let text = escapeHtml(raw);
+      text = text.replace(/```([\s\S]*?)```/g, (_, code) => `<pre><code>${code.trim()}</code></pre>`);
+      text = text.replace(/`([^`\n]+)`/g, '<code>$1</code>');
+      text = text.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+      text = text.replace(/(^|[^*])\*([^*\n]+)\*(?!\*)/g, '$1<em>$2</em>');
+      text = text.replace(/\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g,
+        '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>');
+      const lines = text.split('\n');
+      let html = '', inList = false, listType = 'ul';
+      for (let line of lines){
+        const trimmed = line.trim();
+        const ordered = /^\d+\.\s+(.*)/.exec(trimmed);
+        const unordered = /^[-*]\s+(.*)/.exec(trimmed);
+        if(ordered){
+          if(!inList || listType !== 'ol'){ if(inList) html += `</${listType}>`; html += '<ol>'; listType = 'ol'; inList = true; }
+          html += `<li>${ordered[1]}</li>`;
+        } else if(unordered){
+          if(!inList || listType !== 'ul'){ if(inList) html += `</${listType}>`; html += '<ul>'; listType = 'ul'; inList = true; }
+          html += `<li>${unordered[1]}</li>`;
+        } else {
+          if(inList){ html += `</${listType}>`; inList = false; }
+          if(trimmed === '') continue;
+          html += `<p>${line}</p>`;
+        }
+      }
+      if(inList) html += `</${listType}>`;
+      return html || '<p></p>';
+    }
+
+    function friendlyError(err){
+      const msg = (err && err.message) || String(err);
+      if(/PASTE_YOUR_GROQ_API_KEY_HERE|401|invalid_api_key/i.test(msg)){
+        return `⚠️ No valid Groq API key set. Get a free one at <a href="https://console.groq.com/keys" target="_blank" rel="noopener noreferrer">console.groq.com/keys</a> and paste it into the script.`;
+      }
+      if(/429/i.test(msg)){
+        return `⚠️ Rate limit hit — the free tier allows a limited number of requests per minute. Try again shortly.`;
+      }
+      if(/Failed to fetch|NetworkError/i.test(msg)){
+        return `⚠️ Couldn't reach Groq. Check your internet connection and try again.`;
+      }
+      return `⚠️ Something went wrong: ${escapeHtml(msg)}`;
+    }
+
+    // ----- Send message (FIXED: INTELLIGENT SYSTEM PROMPT) -----
+    async function sendMessage(){
+      const text = inputEl.value.trim();
+      if(!text || isBusy) return;
+
+      renderMessage('user', text);
+      history.push({ role: 'user', content: text });
+      inputEl.value = '';
+      inputEl.style.height = 'auto';
+      isBusy = true;
+      sendBtn.disabled = true;
+
+      const typing = renderTyping();
+
+      try {
+        if(!GROQ_API_KEY || GROQ_API_KEY === 'PASTE_YOUR_GROQ_API_KEY_HERE'){
+          throw new Error('PASTE_YOUR_GROQ_API_KEY_HERE');
+        }
+
+        const messages = [
+          { role: 'system', content: SYSTEM_PROMPT },
+          ...history
+        ];
+
+        const res = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${GROQ_API_KEY}`
+          },
+          body: JSON.stringify({
+            model: GROQ_MODEL,
+            messages,
+            stream: true,
+            temperature: 0.7,
+            max_tokens: 800
+          })
+        });
+
+        if(!res.ok){
+          let detail = '';
+          try{ detail = (await res.json()).error?.message || ''; }catch(e){}
+          throw new Error(`${res.status}${detail ? ': ' + detail : ''}`);
+        }
+        if(!res.body) throw new Error('Streaming not supported');
+
+        removeTyping();
+
+        let fullText = '';
+        const botMsg = renderMessage('bot', '');
+        const bubble = botMsg.querySelector('.bubble');
+        bubble.classList.add('cursor-blink');
+
+        const reader = res.body.getReader();
+        const decoder = new TextDecoder();
+        let buffer = '';
+
+        while(true){
+          const { value, done } = await reader.read();
+          if(done) break;
+          buffer += decoder.decode(value, { stream: true });
+
+          const lines = buffer.split('\n');
+          buffer = lines.pop();
+
+          for(const line of lines){
+            const trimmed = line.trim();
+            if(!trimmed.startsWith('data:')) continue;
+            const payload = trimmed.slice(5).trim();
+            if(payload === '[DONE]') continue;
+            try{
+              const json = JSON.parse(payload);
+              const delta = json.choices?.[0]?.delta?.content || '';
+              if(delta){
+                fullText += delta;
+                bubble.innerHTML = renderMarkdown(fullText);
+                scrollToBottom();
+              }
+            }catch(e){ /* ignore partial chunks */ }
+          }
+        }
+
+        bubble.classList.remove('cursor-blink');
+        if(!fullText) fullText = '(no response)';
+        bubble.innerHTML = renderMarkdown(fullText);
+        history.push({ role: 'assistant', content: fullText });
+
+      } catch(err){
+        removeTyping();
+        renderMessage('bot', friendlyError(err), true);
+      } finally {
+        isBusy = false;
+        sendBtn.disabled = false;
+        inputEl.focus();
+        scrollToBottom();
+      }
+    }
+
+    // ----- Input events -----
+    inputEl.addEventListener('keydown', (e) => {
+      if(e.key === 'Enter' && !e.shiftKey){
+        e.preventDefault();
+        sendMessage();
+      }
+    });
+
+    sendBtn.addEventListener('click', sendMessage);
+
+    inputEl.addEventListener('input', () => {
+      inputEl.style.height = 'auto';
+      inputEl.style.height = Math.min(inputEl.scrollHeight, 80) + 'px';
+    });
+
+    // ----- Auto-open on first load -----
+    setTimeout(() => {
+      if(!isOpen && messagesEl.children.length === 0){
+        openChat();
+      }
+    }, 1200);
+
+  })();
+
+</script>
 </body>
 </html>
